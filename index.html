@@ -157,37 +157,7 @@
             70% { transform: scale(1.02); opacity: 1; }
             100% { transform: scale(1); opacity: 1; }
         }
-
-        /* Animated Crown OVER THE PRINCESS'S PHOTO */
-        .animated-crown {
-            position: absolute;
-            top: 5%; /* Adjust vertically to fit on head */
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60%; /* Adjust size relative to image */
-            max-width: 180px; /* Max size for crown */
-            height: auto;
-            z-index: 4; /* Above image */
-            opacity: 0; /* Hidden initially */
-            animation: crownShine 2s ease-out forwards 2.5s, crownFloat 4s infinite ease-in-out 2.5s;
-        }
-
-        .animated-crown img {
-            width: 100%;
-            height: auto;
-            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.3));
-        }
-
-        @keyframes crownShine {
-            0% { opacity: 0; transform: translateX(-50%) translateY(-20px) scale(0.5); }
-            100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
-        }
-
-        @keyframes crownFloat {
-            0%, 100% { transform: translateX(-50%) translateY(0px); }
-            50% { transform: translateX(-50%) translateY(-8px); }
-        }
-
+        
         /* The Princess's Photo */
         #princessPhoto {
             position: absolute;
@@ -204,20 +174,6 @@
 
         @keyframes photoFadeIn {
             to { opacity: 1; }
-        }
-
-        /* Loading message is no longer needed for local image, but keeping CSS if you decide to add it back */
-        #loading-message {
-            display: none; /* Hide message for local image */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: clamp(1em, 3.5vw, 1.1em);
-            color: #6a1b9a;
-            font-weight: bold;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
-            z-index: 2;
         }
 
         /* Text Box and Animated Text */
@@ -242,10 +198,10 @@
             animation: fadeIn 1s ease-out 5s forwards; /* Even more delayed */
         }
 
-        /* Rose Petal Overlay (unchanged) */
+        /* Rose Petal Overlay - Existing */
         .rose-petal {
             position: fixed;
-            background-color: #ffb6c1;
+            background-color: #ffb6c1; /* Light pink */
             width: 20px;
             height: 20px;
             border-radius: 50%;
@@ -266,6 +222,62 @@
                 opacity: 0;
             }
         }
+
+        /* NEW: Butterflies */
+        .butterfly {
+            position: fixed;
+            width: clamp(30px, 8vw, 60px); /* Responsive size */
+            height: clamp(30px, 8vw, 60px);
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23ffeb3b"/><stop offset="100%" stop-color="%23ff9800"/></linearGradient><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23f44336"/><stop offset="100%" stop-color="%23e91e63"/></linearGradient></defs><path fill="url(%23g1)" d="M50 0C25 0 0 25 0 50s25 50 50 50 50-25 50-50S75 0 50 0zM50 10A40 40 0 0190 50 40 40 0 0150 90 40 40 0 0110 50 40 40 0 0150 10z"/><path fill="url(%23g2)" d="M50 10c-15 0-25 10-25 20s10 20 25 20 25-10 25-20S65 10 50 10zM50 90c-15 0-25-10-25-20s10-20 25-20 25 10 25 20S65 90 50 90z"/><circle cx="50" cy="50" r="10" fill="%23424242"/></svg>') no-repeat center center;
+            background-size: contain;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 9998; /* Below petals */
+            animation: fly 15s linear infinite;
+        }
+
+        @keyframes fly {
+            0% {
+                transform: translate(var(--x-start), var(--y-start)) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            10% { opacity: 0.7; transform: translate(calc(var(--x-start) + 5vw), calc(var(--y-start) - 5vh)) rotate(15deg) scale(1); }
+            50% { opacity: 0.9; transform: translate(var(--x-mid), var(--y-mid)) rotate(-15deg) scale(1.1); }
+            90% { opacity: 0.7; transform: translate(calc(var(--x-end) - 5vw), calc(var(--y-end) + 5vh)) rotate(0deg) scale(0.9); }
+            100% {
+                transform: translate(var(--x-end), var(--y-end)) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        /* NEW: Flying Roses */
+        .flying-rose {
+            position: fixed;
+            width: clamp(25px, 7vw, 50px); /* Responsive size */
+            height: clamp(25px, 7vw, 50px);
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="roseGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23e91e63"/><stop offset="100%" stop-color="%23880e4f"/></linearGradient></defs><path fill="url(%23roseGradient)" d="M50 0C30 0 0 30 0 50s30 50 50 50 50-30 50-50S70 0 50 0zm0 10a40 40 0 0140 40 40 40 0 01-40 40 40 40 0 01-40-40 40 40 0 0140-40zM50 20a30 30 0 00-30 30 30 30 0 0030 30 30 30 0 0030-30 30 30 0 00-30-30zM50 30a20 20 0 0120 20 20 20 0 01-20 20 20 20 0 01-20-20 20 20 0 0120-20z"/><path fill="%234caf50" d="M45 80L50 100 55 80z"/></svg>') no-repeat center center;
+            background-size: contain;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 9997; /* Below butterflies */
+            animation: floatRose 20s ease-in-out infinite;
+        }
+
+        @keyframes floatRose {
+            0% {
+                transform: translate(var(--x-start), -10vh) rotate(0deg) scale(0.7);
+                opacity: 0;
+            }
+            20% { opacity: 0.8; transform: translate(calc(var(--x-start) + 10vw), 20vh) rotate(45deg) scale(1); }
+            40% { opacity: 0.9; transform: translate(calc(var(--x-start) - 5vw), 40vh) rotate(90deg) scale(1.1); }
+            60% { opacity: 0.8; transform: translate(calc(var(--x-start) + 15vw), 60vh) rotate(135deg) scale(1.05); }
+            80% { opacity: 0.7; transform: translate(calc(var(--x-start) - 10vw), 80vh) rotate(180deg) scale(0.9); }
+            100% {
+                transform: translate(var(--x-end), 110vh) rotate(225deg) scale(0.7);
+                opacity: 0;
+            }
+        }
+
 
         /* Responsive Adjustments */
         @media (min-width: 768px) {
@@ -291,24 +303,19 @@
                 width: 95%;
                 padding-top: 95%;
             }
-            .animated-crown { width: 70%; max-width: 120px; top: 8%; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>👑 My Treasure Map Ends Here... For My Princess 💖</h1>
+        <h1>💖 My Treasure Map Ends Here... For My Princess 💖</h1>
         
         <div class="main-content">
             <div class="image-box">
                 <p>Gaze into this magical frame... Do you see the real treasure?</p>
                 <div class="photo-frame">
                     <img id="princessPhoto" src="princess.png" alt="My Beautiful Princess">
-                    <p id="loading-message"></p>
-                    <div class="animated-crown" id="animatedCrown">
-                        <img src="https://www.svgrepo.com/show/366367/crown.svg" alt="Animated Crown">
-                    </div>
                 </div>
             </div>
             
@@ -341,34 +348,22 @@
 
     <script>
         const princessPhoto = document.getElementById('princessPhoto');
-        const animatedCrown = document.getElementById('animatedCrown');
 
-        // Since this is a local image, it should load immediately. 
-        // We ensure the crown and photo are visible immediately after the main container animation.
-        
-        // Function to ensure crown is shown if image loaded correctly
-        princessPhoto.onload = () => {
-             // The animated crown is set to be hidden initially via CSS (opacity: 0) and appears via animation (crownShine).
-             // We ensure it is set to display: block here, but the opacity animation manages the fade-in.
-            animatedCrown.style.display = 'block'; 
-        };
+        // Initial check for local image
+        document.addEventListener('DOMContentLoaded', () => {
+            // No specific crown to show/hide on image load now
+            // Just ensure the image path is correct, handled by onerror below
+        });
 
         // Fallback for image loading error
         princessPhoto.onerror = () => {
             alert("💔 Error loading princess.png. Please check the file path! 💔");
-            animatedCrown.style.display = 'none'; // Hide crown if image fails
         };
 
-        // Initialize display states if image loads from cache or very fast
-        document.addEventListener('DOMContentLoaded', () => {
-            if (princessPhoto.complete && princessPhoto.naturalHeight !== 0) {
-                princessPhoto.onload(); // Manually trigger if already loaded
-            }
-             // No need for a separate loading message element since we expect the local file to load quickly.
-        });
 
+        // --- Animated Petals, Butterflies, and Roses ---
 
-        // Generate falling rose petals (unchanged)
+        // Generate falling rose petals (existing logic)
         function createPetal() {
             const petal = document.createElement('div');
             petal.classList.add('rose-petal');
@@ -393,9 +388,63 @@
                 petal.remove();
             });
         }
-
-        // Create a continuous stream of petals
         setInterval(createPetal, 300); // Create a new petal every 300ms
+
+
+        // Generate Butterflies
+        function createButterfly() {
+            const butterfly = document.createElement('div');
+            butterfly.classList.add('butterfly');
+            document.body.appendChild(butterfly);
+
+            const startX = Math.random() * 100 + 'vw';
+            const startY = Math.random() * 100 + 'vh';
+            const midX = Math.random() * 100 + 'vw';
+            const midY = Math.random() * 100 + 'vh';
+            const endX = Math.random() * 100 + 'vw';
+            const endY = Math.random() * 100 + 'vh';
+
+            const duration = Math.random() * 10 + 10; // 10-20 seconds
+            const delay = Math.random() * 8; // Start at different times
+
+            butterfly.style.setProperty('--x-start', startX);
+            butterfly.style.setProperty('--y-start', startY);
+            butterfly.style.setProperty('--x-mid', midX);
+            butterfly.style.setProperty('--y-mid', midY);
+            butterfly.style.setProperty('--x-end', endX);
+            butterfly.style.setProperty('--y-end', endY);
+            butterfly.style.animationDuration = duration + 's';
+            butterfly.style.animationDelay = delay + 's';
+
+            butterfly.addEventListener('animationend', () => {
+                butterfly.remove();
+            });
+        }
+        setInterval(createButterfly, 800); // Create a new butterfly every 800ms
+
+
+        // Generate Flying Roses
+        function createFlyingRose() {
+            const rose = document.createElement('div');
+            rose.classList.add('flying-rose');
+            document.body.appendChild(rose);
+
+            const startX = Math.random() * 100 + 'vw';
+            const endX = Math.random() * 100 + 'vw';
+            const duration = Math.random() * 10 + 15; // 15-25 seconds
+            const delay = Math.random() * 10; // Start at different times
+
+            rose.style.setProperty('--x-start', startX);
+            rose.style.setProperty('--x-end', endX);
+            rose.style.animationDuration = duration + 's';
+            rose.style.animationDelay = delay + 's';
+
+            rose.addEventListener('animationend', () => {
+                rose.remove();
+            });
+        }
+        setInterval(createFlyingRose, 1200); // Create a new flying rose every 1.2 seconds
+
     </script>
 
 </body>
