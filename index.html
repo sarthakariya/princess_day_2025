@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Princess's Treasure</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Charmonman:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Charmonman:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
         /* General Body and Background */
         body {
@@ -12,60 +12,95 @@
             background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%); /* Soft gradient background */
             color: #4a148c; /* Deep royal purple for text */
             text-align: center;
-            padding: 15px; /* Slightly less padding for mobile */
+            padding: 15px;
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
             overflow-x: hidden; /* Prevent horizontal scroll */
+            opacity: 0; /* Hidden initially for opening animation */
+            animation: bodyFadeIn 2s ease-out forwards;
+        }
+
+        @keyframes bodyFadeIn {
+            to { opacity: 1; }
         }
 
         /* Main Container for content */
         .container {
             max-width: 900px;
-            width: 95%; /* Make it more flexible for smaller screens */
+            width: 95%;
             margin: auto;
-            background: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
-            padding: 25px; /* Slightly less padding */
-            border-radius: 25px; /* More rounded corners */
-            box-shadow: 0 10px 30px rgba(74, 20, 140, 0.3); /* Deeper shadow */
+            background: rgba(255, 255, 255, 0.95); /* Slightly less transparent white */
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(74, 20, 140, 0.4); /* Deeper shadow */
             border: 4px solid #ab47bc; /* Regal purple border */
             position: relative;
-            overflow: hidden; /* For inner decorations */
+            overflow: hidden;
             z-index: 1;
+            transform: scale(0.9); /* Start smaller for bounce effect */
+            animation: containerPop 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes containerPop {
+            0% { transform: scale(0.9); opacity: 0; }
+            70% { transform: scale(1.02); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         /* Decorative flourishes for the container */
         .container::before, .container::after {
             content: '';
             position: absolute;
-            width: 60px;
-            height: 60px;
+            width: 70px; /* Slightly larger flourishes */
+            height: 70px;
             background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23ab47bc" d="M50 0C22.4 0 0 22.4 0 50s22.4 50 50 50 50-22.4 50-50S77.6 0 50 0zm0 88.5c-21.2 0-38.5-17.3-38.5-38.5S28.8 11.5 50 11.5s38.5 17.3 38.5 38.5-17.3 38.5-38.5 38.5zM50 25c-13.8 0-25 11.2-25 25s11.2 25 25 25 25-11.2 25-25-11.2-25-25-25z"/><path fill="%238e24aa" d="M50 37.5c-6.9 0-12.5 5.6-12.5 12.5s5.6 12.5 12.5 12.5 12.5-5.6 12.5-12.5-5.6-12.5-12.5-12.5z"/></svg>') no-repeat center center;
             background-size: contain;
             opacity: 0.2;
+            animation: rotateFlourish 10s linear infinite; /* Animated flourish */
         }
-        .container::before { top: -20px; left: -20px; transform: rotate(0deg); }
-        .container::after { bottom: -20px; right: -20px; transform: rotate(180deg); }
+        .container::before { top: -25px; left: -25px; }
+        .container::after { bottom: -25px; right: -25px; transform: rotate(180deg); }
+
+        @keyframes rotateFlourish {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
 
         /* Headings and Paragraphs */
         h1 {
             font-family: 'Charmonman', cursive; /* Scripty, elegant font for title */
             color: #6a1b9a; /* Darker royal purple */
-            font-size: 2.5em; /* Larger heading */
+            font-size: 2.8em; /* Larger heading */
             margin-bottom: 25px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.15);
+            animation: textSlideIn 1s ease-out 1s forwards;
+            opacity: 0;
+            transform: translateY(-20px);
         }
+
+        @keyframes textSlideIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         p {
-            font-size: 1.1em; /* Slightly smaller for mobile compatibility */
+            font-size: 1.1em;
             line-height: 1.7;
-            margin-bottom: 18px; /* Adjusted margin */
+            margin-bottom: 18px;
         }
         .romantic-text p {
-            font-size: 1.25em; /* Larger for the main message */
+            font-family: 'Great Vibes', cursive; /* More elegant script font for main message */
+            font-size: 1.5em; /* Larger for the main message */
             font-weight: 500;
             color: #4a148c;
+            animation: romanticTextFadeIn 2s ease-out 3s forwards; /* Delayed animation */
+            opacity: 0;
+        }
+
+        @keyframes romanticTextFadeIn {
+            to { opacity: 1; }
         }
 
         /* Main Content Layout (Flexbox) */
@@ -79,12 +114,12 @@
         /* Camera Box Styling */
         .camera-box {
             position: relative;
-            background: #e0f2f7; /* Light blueish tint for the camera area */
+            background: #e0f2f7; /* Light bluish tint for the camera area */
             padding: 15px;
             border-radius: 20px;
             box-shadow: inset 0 0 15px rgba(0,0,0,0.1); /* Inner shadow for depth */
             border: 3px solid #6a1b9a; /* Purple border */
-            overflow: hidden; /* Keep content within rounded corners */
+            overflow: hidden;
         }
 
         /* The Ornate Camera Frame */
@@ -92,42 +127,90 @@
             position: relative;
             width: 100%;
             padding-top: 100%; /* Maintain 1:1 aspect ratio */
-            max-width: 300px; /* Max size for the frame */
+            max-width: 300px;
             max-height: 300px;
-            margin: 0 auto 20px auto; /* Center the frame */
+            margin: 0 auto 20px auto;
             border: 8px double #ffd700; /* Gold double border */
-            border-radius: 50%; /* Make it round! */
-            box-shadow: 0 0 20px rgba(255,215,0,0.7), inset 0 0 10px rgba(255,215,0,0.5); /* Glowing gold effect */
+            border-radius: 50%;
+            box-shadow: 0 0 25px rgba(255,215,0,0.8), inset 0 0 12px rgba(255,215,0,0.6); /* More glowing gold effect */
             background: linear-gradient(45deg, #fff3e0, #ffecb3); /* Inner gold gradient */
             overflow: hidden;
-            display: flex; /* For centering video */
+            display: flex;
             justify-content: center;
             align-items: center;
+            transform: scale(0.8); /* Start smaller for pop in */
+            opacity: 0;
+            animation: framePopIn 1s ease-out 1.5s forwards;
         }
+
+        @keyframes framePopIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            70% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Crown above the frame */
         .camera-frame::before {
             content: '';
             position: absolute;
-            top: -20px; /* Position the crown above */
+            top: -30px; /* Position the crown above */
             left: 50%;
             transform: translateX(-50%);
-            width: 80px; /* Size of the crown */
-            height: 60px;
+            width: 100px; /* Larger crown */
+            height: 75px;
             background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23ffd700" d="M2.2 60.1l11-20 22 20h29.6l22-20 11 20L100 60.1H0zM22.5 35.8l15-15L50 0l12.5 20.8 15-15 15 15-15 15 15 15L87.5 70.8 75 50 62.5 70.8 50 50 37.5 70.8 25 50 12.5 70.8l-15-15 15-15z"/></svg>') no-repeat center center;
             background-size: contain;
-            z-index: 2; /* Ensure crown is above frame */
-            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
+            z-index: 3; /* Ensure crown is above frame */
+            filter: drop-shadow(0 5px 8px rgba(0,0,0,0.4));
+            animation: crownBounce 2s infinite ease-in-out 2s; /* Animated crown */
         }
 
+        @keyframes crownBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        /* Crown over the person's head (animated) */
+        .animated-crown {
+            position: absolute;
+            top: 5%; /* Adjust vertically */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%; /* Adjust size relative to video */
+            height: auto;
+            max-width: 150px; /* Max size for crown */
+            z-index: 4; /* Above video */
+            opacity: 0; /* Hidden until video plays */
+            animation: crownShine 2s ease-out forwards 2.5s, crownFloat 4s infinite ease-in-out 2.5s;
+        }
+
+        .animated-crown img {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.3));
+        }
+
+        @keyframes crownShine {
+            0% { opacity: 0; transform: translateX(-50%) translateY(-20px) scale(0.5); }
+            100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+        }
+
+        @keyframes crownFloat {
+            0%, 100% { transform: translateX(-50%) translateY(0px); }
+            50% { transform: translateX(-50%) translateY(-8px); }
+        }
+
+
         #videoElement {
-            position: absolute; /* Position within the circular frame */
+            position: absolute;
             top: 50%;
             left: 50%;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Cover the circular frame */
-            border-radius: 50%; /* Keep video circular */
+            object-fit: cover;
+            border-radius: 50%;
             transform: translate(-50%, -50%) scaleX(-1); /* Center and flip for selfie */
-            display: none; /* Hidden until stream starts */
+            display: none;
             z-index: 1;
         }
 
@@ -149,7 +232,7 @@
             border-radius: 20px;
             border: 3px solid #ab47bc;
             opacity: 0; /* Hidden initially for animation */
-            animation: fadeIn 1.5s ease-out 1.5s forwards; /* Delay to show camera first */
+            animation: fadeIn 1.5s ease-out 2s forwards; /* Delayed to show camera first */
         }
         @keyframes fadeIn {
             to { opacity: 1; }
@@ -161,15 +244,45 @@
             color: #880e4f; /* Deeper rose for the tease */
             opacity: 0.8;
             font-style: italic;
+            animation: fadeIn 1s ease-out 4s forwards; /* Even more delayed */
         }
+
+        /* Rose Petal Overlay */
+        .rose-petal {
+            position: fixed;
+            background-color: #ffb6c1; /* Light pink */
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 9999;
+            animation: fall 10s linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translate(var(--x-start), -10vh) rotateZ(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.8; }
+            100% {
+                transform: translate(var(--x-end), 110vh) rotateZ(720deg);
+                opacity: 0;
+            }
+        }
+
 
         /* Responsive Adjustments for larger screens (Tablets and Desktops) */
         @media (min-width: 768px) {
             h1 {
-                font-size: 3em;
+                font-size: 3.5em; /* Even larger heading */
             }
             p {
                 font-size: 1.2em;
+            }
+            .romantic-text p {
+                font-size: 1.7em;
             }
             .main-content {
                 flex-direction: row; /* Side-by-side on larger screens */
@@ -187,10 +300,11 @@
             }
         }
         @media (max-width: 480px) { /* Extra small screens */
-            h1 { font-size: 2em; }
-            .romantic-text p { font-size: 1.1em; }
+            h1 { font-size: 2.2em; }
+            .romantic-text p { font-size: 1.2em; }
             .camera-frame { max-width: 250px; max-height: 250px; }
-            .camera-frame::before { width: 60px; height: 45px; top: -15px; } /* Smaller crown */
+            .camera-frame::before { width: 80px; height: 60px; top: -20px; } /* Smaller crown above frame */
+            .animated-crown { width: 60%; max-width: 100px; top: 8%; } /* Smaller animated crown */
             .container { padding: 15px; }
         }
     </style>
@@ -206,11 +320,14 @@
                 <div class="camera-frame">
                     <video id="videoElement" autoplay playsinline></video>
                     <p id="loading-message">Summoning the magic...</p>
+                    <div class="animated-crown" id="animatedCrown">
+                        <img src="https://www.svgrepo.com/show/366367/crown.svg" alt="Animated Crown">
+                    </div>
                 </div>
             </div>
             
             <div class="text-box">
-                <p>
+                <p class="romantic-text">
                     **Look carefully...**
                     <br><br>
                     This radiant face right here?
@@ -224,7 +341,7 @@
                     The one my soul chose without a second thought.
                 </p>
                 
-                <p>
+                <p class="romantic-text">
                     **If you're gazing at this now...**
                     <br>
                     then just know...
@@ -245,10 +362,11 @@
     <script>
         const video = document.getElementById('videoElement');
         const loadingMessage = document.getElementById('loading-message');
+        const animatedCrown = document.getElementById('animatedCrown');
 
         // Request camera access with 'playsinline' for iOS Safari
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ 
+            navigator.mediaDevices.getUserMedia({
                 video: {
                     facingMode: "user" // Ensures front/selfie camera!
                 }
@@ -258,15 +376,48 @@
                 video.style.display = 'block'; // Show the video element
                 loadingMessage.style.display = 'none'; // Hide loading message
                 video.play(); // Ensure video plays
+                animatedCrown.style.display = 'block'; // Show the animated crown
             })
             .catch(function(error) {
                 console.error("Camera access failed: ", error);
                 loadingMessage.innerHTML = "💔 Camera magic couldn't activate, but your beauty shines brighter than any lens! This message is still just for you, my love. 💔";
                 loadingMessage.style.display = 'block';
+                animatedCrown.style.display = 'none'; // Hide crown if no camera
             });
         } else {
             loadingMessage.innerHTML = "💔 This device cannot perform camera magic, but the message is still for my beautiful princess! 💔";
+            animatedCrown.style.display = 'none'; // Hide crown if no camera
         }
+
+        // Generate falling rose petals
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.classList.add('rose-petal');
+            document.body.appendChild(petal);
+
+            const startX = Math.random() * 100 + 'vw';
+            const endX = Math.random() * 100 + 'vw';
+            const duration = Math.random() * 8 + 7; // Between 7 and 15 seconds
+            const delay = Math.random() * 5; // Start at different times
+            const size = Math.random() * 15 + 10; // Between 10 and 25px
+
+            petal.style.setProperty('--x-start', startX);
+            petal.style.setProperty('--x-end', endX);
+            petal.style.width = size + 'px';
+            petal.style.height = size + 'px';
+            petal.style.animationDuration = duration + 's';
+            petal.style.animationDelay = delay + 's';
+            petal.style.backgroundColor = `hsl(${Math.random() * 20 + 330}, 80%, 70%)`; /* Varying pinks/reds */
+            petal.style.backgroundImage = `radial-gradient(circle at 30% 30%, #fff, ${petal.style.backgroundColor})`; /* Inner glow */
+
+
+            petal.addEventListener('animationend', () => {
+                petal.remove();
+            });
+        }
+
+        // Create a continuous stream of petals
+        setInterval(createPetal, 300); // Create a new petal every 300ms
     </script>
 
 </body>
