@@ -2,133 +2,142 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Princess's Treasure</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>My Crowned Princess</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Charmonman:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* General Body and Background */
+        /* BASE STYLES & FONT SETUP */
         body {
-            font-family: 'Playfair Display', serif; /* Elegant font */
-            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%); /* Soft gradient background */
-            color: #4a148c; /* Deep royal purple for text */
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+            color: #4a148c;
             text-align: center;
-            padding: 15px; /* Slightly less padding for mobile */
+            padding: 10px;
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-x: hidden;
+            touch-action: manipulation;
         }
 
-        /* Main Container for content */
+        /* KEYFRAME ANIMATIONS */
+        @keyframes containerPop {
+            0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes frameGlow {
+            from { box-shadow: 0 0 18px rgba(255,215,0,0.8), inset 0 0 8px rgba(255,215,0,0.6); }
+            to { box-shadow: 0 0 25px rgba(255,215,0,1), inset 0 0 12px rgba(255,215,0,0.8); }
+        }
+        @keyframes buttonPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(255,128,171,0.8); }
+            100% { transform: scale(1); }
+        }
+
+        /* CONTAINER */
         .container {
             max-width: 900px;
-            width: 95%; /* Make it more flexible for smaller screens */
+            width: 98%;
             margin: auto;
-            background: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
-            padding: 25px; /* Slightly less padding */
-            border-radius: 25px; /* More rounded corners */
-            box-shadow: 0 10px 30px rgba(74, 20, 140, 0.3); /* Deeper shadow */
-            border: 4px solid #ab47bc; /* Regal purple border */
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 30px;
+            box-shadow: 0 12px 35px rgba(74, 20, 140, 0.4);
+            border: 5px solid #ab47bc;
             position: relative;
-            overflow: hidden; /* For inner decorations */
+            overflow: hidden;
             z-index: 1;
+            opacity: 0; /* Hidden initially */
+            animation: containerPop 1s ease-out 0.5s forwards; /* Animated entry */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* Decorative flourishes for the container */
-        .container::before, .container::after {
-            content: '';
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23ab47bc" d="M50 0C22.4 0 0 22.4 0 50s22.4 50 50 50 50-22.4 50-50S77.6 0 50 0zm0 88.5c-21.2 0-38.5-17.3-38.5-38.5S28.8 11.5 50 11.5s38.5 17.3 38.5 38.5-17.3 38.5-38.5 38.5zM50 25c-13.8 0-25 11.2-25 25s11.2 25 25 25 25-11.2 25-25-11.2-25-25-25z"/><path fill="%238e24aa" d="M50 37.5c-6.9 0-12.5 5.6-12.5 12.5s5.6 12.5 12.5 12.5 12.5-5.6 12.5-12.5-5.6-12.5-12.5-12.5z"/></svg>') no-repeat center center;
-            background-size: contain;
-            opacity: 0.2;
-        }
-        .container::before { top: -20px; left: -20px; transform: rotate(0deg); }
-        .container::after { bottom: -20px; right: -20px; transform: rotate(180deg); }
-
-        /* Headings and Paragraphs */
+        /* TITLES AND TEXT */
         h1 {
-            font-family: 'Charmonman', cursive; /* Scripty, elegant font for title */
-            color: #6a1b9a; /* Darker royal purple */
-            font-size: 2.5em; /* Larger heading */
-            margin-bottom: 25px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            font-family: 'Charmonman', cursive;
+            color: #6a1b9a;
+            font-size: clamp(2em, 8vw, 3.5em);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.15);
+            transition: color 0.5s;
         }
         p {
-            font-size: 1.1em; /* Slightly smaller for mobile compatibility */
-            line-height: 1.7;
-            margin-bottom: 18px; /* Adjusted margin */
-        }
-        .romantic-text p {
-            font-size: 1.25em; /* Larger for the main message */
-            font-weight: 500;
-            color: #4a148c;
+            font-size: clamp(0.9em, 3.5vw, 1.15em);
+            line-height: 1.6;
+            margin-bottom: 15px;
         }
 
-        /* Main Content Layout (Flexbox) */
+        /* MAIN CONTENT LAYOUT */
         .main-content {
             display: flex;
-            flex-direction: column; /* Stacked on mobile by default */
-            gap: 25px;
-            margin-top: 25px;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 15px;
+            width: 100%;
         }
 
-        /* Camera Box Styling */
+        /* CAMERA BOX & FRAME */
         .camera-box {
             position: relative;
-            background: #e0f2f7; /* Light blueish tint for the camera area */
-            padding: 15px;
-            border-radius: 20px;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.1); /* Inner shadow for depth */
-            border: 3px solid #6a1b9a; /* Purple border */
-            overflow: hidden; /* Keep content within rounded corners */
+            background: #e0f2f7;
+            padding: 10px;
+            border-radius: 25px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+            border: 3px solid #6a1b9a;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 250px;
         }
-
-        /* The Ornate Camera Frame */
         .camera-frame {
             position: relative;
             width: 100%;
-            padding-top: 100%; /* Maintain 1:1 aspect ratio */
-            max-width: 300px; /* Max size for the frame */
-            max-height: 300px;
-            margin: 0 auto 20px auto; /* Center the frame */
-            border: 8px double #ffd700; /* Gold double border */
-            border-radius: 50%; /* Make it round! */
-            box-shadow: 0 0 20px rgba(255,215,0,0.7), inset 0 0 10px rgba(255,215,0,0.5); /* Glowing gold effect */
-            background: linear-gradient(45deg, #fff3e0, #ffecb3); /* Inner gold gradient */
+            max-width: 300px;
+            padding-top: 100%;
+            margin: 0 auto 15px auto;
+            border: 7px double #ffd700;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #fff3e0, #ffecb3);
             overflow: hidden;
-            display: flex; /* For centering video */
+            display: flex;
             justify-content: center;
             align-items: center;
-        }
-        .camera-frame::before {
-            content: '';
-            position: absolute;
-            top: -20px; /* Position the crown above */
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px; /* Size of the crown */
-            height: 60px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23ffd700" d="M2.2 60.1l11-20 22 20h29.6l22-20 11 20L100 60.1H0zM22.5 35.8l15-15L50 0l12.5 20.8 15-15 15 15-15 15 15 15L87.5 70.8 75 50 62.5 70.8 50 50 37.5 70.8 25 50 12.5 70.8l-15-15 15-15z"/></svg>') no-repeat center center;
-            background-size: contain;
-            z-index: 2; /* Ensure crown is above frame */
-            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
+            animation: frameGlow 3s infinite alternate;
         }
 
         #videoElement {
-            position: absolute; /* Position within the circular frame */
+            position: absolute;
             top: 50%;
             left: 50%;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Cover the circular frame */
-            border-radius: 50%; /* Keep video circular */
-            transform: translate(-50%, -50%) scaleX(-1); /* Center and flip for selfie */
-            display: none; /* Hidden until stream starts */
+            object-fit: cover;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scaleX(-1);
+            display: none;
             z-index: 1;
+        }
+
+        #crownCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+        .crown-active #crownCanvas {
+            opacity: 1;
         }
 
         #loading-message {
@@ -136,103 +145,157 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 1.1em;
+            font-size: clamp(1em, 4vw, 1.2em);
             color: #6a1b9a;
             font-weight: bold;
             text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
         }
 
-        /* Text Box and Animated Text */
+        /* REVEAL BUTTON */
+        #revealButton {
+            background: linear-gradient(45deg, #ff80ab, #e040fb);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: clamp(1em, 4vw, 1.2em);
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            margin-top: 25px;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+        #revealButton.ready {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+            animation: buttonPulse 1.5s infinite;
+        }
+        #revealButton.ready:hover {
+            animation: none;
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 7px 20px rgba(0,0,0,0.3);
+        }
+        #revealButton.clicked {
+            animation: none;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+
+        /* TEXT BOX & STAGGERED ANIMATION */
         .text-box {
-            background: #f3e5f5; /* Lighter purple background for text */
+            background: #f3e5f5;
             padding: 20px;
             border-radius: 20px;
             border: 3px solid #ab47bc;
-            opacity: 0; /* Hidden initially for animation */
-            animation: fadeIn 1.5s ease-out 1.5s forwards; /* Delay to show camera first */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            pointer-events: none;
+            min-height: 200px;
         }
-        @keyframes fadeIn {
-            to { opacity: 1; }
+        .text-revealed .text-box {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
         }
+        
+        .romantic-text p {
+            font-size: clamp(1em, 4.5vw, 1.35em);
+            font-weight: 500;
+            color: #4a148c;
+            line-height: 1.7;
+            opacity: 0; /* Hidden initially for staggered reveal */
+            transform: translateX(-15px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        /* Staggered text animation classes (added by JS) */
+        .text-revealed .p-1 { transition-delay: 0.2s; opacity: 1; transform: translateX(0); }
+        .text-revealed .p-2 { transition-delay: 0.6s; opacity: 1; transform: translateX(0); }
+        .text-revealed .p-3 { transition-delay: 1.0s; opacity: 1; transform: translateX(0); }
+        .text-revealed .p-4 { transition-delay: 1.4s; opacity: 1; transform: translateX(0); }
 
         .tease {
-            margin-top: 35px;
-            font-size: 0.9em;
-            color: #880e4f; /* Deeper rose for the tease */
+            margin-top: 25px;
+            font-size: clamp(0.8em, 3.2vw, 0.95em);
+            color: #880e4f;
             opacity: 0.8;
             font-style: italic;
+            transition: opacity 1s ease-in 2s; /* Fade in after the main text */
         }
 
-        /* Responsive Adjustments for larger screens (Tablets and Desktops) */
+        /* RESPONSIVE LAYOUT */
         @media (min-width: 768px) {
-            h1 {
-                font-size: 3em;
-            }
-            p {
-                font-size: 1.2em;
+            .container {
+                padding: 30px;
             }
             .main-content {
-                flex-direction: row; /* Side-by-side on larger screens */
+                flex-direction: row;
+                gap: 30px;
             }
             .camera-box, .text-box {
-                flex: 1; /* Distribute space evenly */
-                padding: 30px;
+                flex: 1;
+                padding: 25px;
+                min-height: 350px;
             }
             .camera-frame {
                 max-width: 350px;
                 max-height: 350px;
             }
-            .text-box {
-                margin-left: 20px; /* Add some space between camera and text */
+            #revealButton {
+                margin-top: 30px;
             }
-        }
-        @media (max-width: 480px) { /* Extra small screens */
-            h1 { font-size: 2em; }
-            .romantic-text p { font-size: 1.1em; }
-            .camera-frame { max-width: 250px; max-height: 250px; }
-            .camera-frame::before { width: 60px; height: 45px; top: -15px; } /* Smaller crown */
-            .container { padding: 15px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <div class="container" id="mainContainer">
         <h1>👑 My Treasure Map Ends Here... For My Princess 💖</h1>
         
         <div class="main-content">
             <div class="camera-box">
                 <p>Look closely into the magical mirror... Do you see the real treasure?</p>
                 <div class="camera-frame">
-                    <video id="videoElement" autoplay playsinline></video>
+                    <video id="videoElement" autoplay playsinline muted></video>
+                    <canvas id="crownCanvas"></canvas>
                     <p id="loading-message">Summoning the magic...</p>
                 </div>
+                <button id="revealButton">Unveil the Royal Message!</button>
             </div>
             
-            <div class="text-box">
-                <p>
-                    **Look carefully...**
-                    <br><br>
-                    This radiant face right here?
-                    <br><br>
-                    This is the girl I call **my princess.**
-                    <br>
-                    My ultimate treasure.
-                    <br>
-                    My heart's true person.
-                    <br>
-                    The one my soul chose without a second thought.
-                </p>
-                
-                <p>
-                    **If you're gazing at this now...**
-                    <br>
-                    then just know...
-                    <br>
-                    you're the only queen I'd cross a thousand enchanted maps for,
-                    <br>
-                    and beyond.
-                </p>
+            <div class="text-box" id="textBox">
+                <div class="romantic-text">
+                    <p class="p-1">
+                        **Look carefully...**
+                        <br><br>
+                        This radiant face right here?
+                    </p>
+                    <p class="p-2">
+                        This is the girl I call **my princess.**
+                        <br>
+                        My ultimate treasure.
+                        <br>
+                        My heart's true person.
+                    </p>
+                    <p class="p-3">
+                        The one my soul chose without a second thought.
+                    </p>
+                    <p class="p-4">
+                        **If you're gazing at this now...**
+                        <br>
+                        then just know...
+                        <br>
+                        you're the only queen I'd cross a thousand enchanted maps for,
+                        <br>
+                        and beyond.
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -245,28 +308,113 @@
     <script>
         const video = document.getElementById('videoElement');
         const loadingMessage = document.getElementById('loading-message');
+        const revealButton = document.getElementById('revealButton');
+        const textBox = document.getElementById('textBox');
+        const mainContainer = document.getElementById('mainContainer');
+        const crownCanvas = document.getElementById('crownCanvas');
+        const ctx = crownCanvas.getContext('2d');
+        const cameraFrame = document.querySelector('.camera-frame');
+        
+        let crownActive = false;
 
-        // Request camera access with 'playsinline' for iOS Safari
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ 
-                video: {
-                    facingMode: "user" // Ensures front/selfie camera!
-                }
-            })
-            .then(function(stream) {
-                video.srcObject = stream;
-                video.style.display = 'block'; // Show the video element
-                loadingMessage.style.display = 'none'; // Hide loading message
-                video.play(); // Ensure video plays
-            })
-            .catch(function(error) {
-                console.error("Camera access failed: ", error);
-                loadingMessage.innerHTML = "💔 Camera magic couldn't activate, but your beauty shines brighter than any lens! This message is still just for you, my love. 💔";
-                loadingMessage.style.display = 'block';
-            });
-        } else {
-            loadingMessage.innerHTML = "💔 This device cannot perform camera magic, but the message is still for my beautiful princess! 💔";
+        // Crown image (SVG Data URL)
+        const crownImage = new Image();
+        crownImage.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="goldGradient" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" /><stop offset="100%" style="stop-color:#FFC400;stop-opacity:1" /></linearGradient></defs><path fill="url(%23goldGradient)" stroke="%23B8860B" stroke-width="2" d="M2.2 60.1l11-20 22 20h29.6l22-20 11 20L100 60.1H0zM22.5 35.8l15-15L50 0l12.5 20.8 15-15 15 15-15 15 15 15L87.5 70.8 75 50 62.5 70.8 50 50 37.5 70.8 25 50 12.5 70.8l-15-15 15-15z"/></svg>';
+
+
+        // --- CROWN DRAWING FUNCTION ---
+        function drawCrown() {
+            if (!crownActive) return;
+
+            // Clear the canvas
+            ctx.clearRect(0, 0, crownCanvas.width, crownCanvas.height);
+
+            // Calculate video dimensions within the frame (it's 1:1)
+            const videoSize = crownCanvas.width;
+            
+            // Crown properties
+            const crownWidth = videoSize * 0.6; // Crown is 60% the size of the video width
+            const crownHeight = crownWidth * (60 / 100); // Maintain aspect ratio
+            const crownX = (videoSize - crownWidth) / 2;
+            const crownY = videoSize * 0.15; // Position near the top of the frame
+
+            // Draw the crown
+            ctx.drawImage(crownImage, crownX, crownY, crownWidth, crownHeight);
+
+            // Continue the animation loop
+            requestAnimationFrame(drawCrown);
         }
+
+        // --- CAMERA SETUP ---
+        function startCamera() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: "user" }
+                })
+                .then(function(stream) {
+                    video.srcObject = stream;
+                    video.onloadedmetadata = function(e) {
+                        video.play();
+                        video.style.display = 'block';
+                        loadingMessage.style.display = 'none';
+
+                        // Set canvas size to match frame size after video loads
+                        const frameRect = cameraFrame.getBoundingClientRect();
+                        crownCanvas.width = frameRect.width;
+                        crownCanvas.height = frameRect.height;
+
+                        // Start the crown animation and make the button clickable
+                        crownActive = true;
+                        mainContainer.classList.add('crown-active');
+                        revealButton.classList.add('ready');
+                        drawCrown();
+                    };
+                })
+                .catch(function(error) {
+                    console.error("Camera access failed: ", error);
+                    loadingMessage.innerHTML = "💔 Camera magic couldn't activate, but your beauty shines brighter than any lens! This message is still just for you, my love. 💔";
+                    revealButton.classList.add('ready'); // Still allow message reveal
+                });
+            } else {
+                loadingMessage.innerHTML = "💔 This device cannot perform camera magic, but the message is still for my beautiful princess! 💔";
+                revealButton.classList.add('ready'); // Still allow message reveal
+            }
+        }
+
+        // --- REVEAL LOGIC (Click Animation) ---
+        revealButton.addEventListener('click', function() {
+            if (!revealButton.classList.contains('ready')) return;
+
+            // 1. Animate out the button
+            revealButton.classList.remove('ready');
+            revealButton.classList.add('clicked');
+
+            // 2. Animate in the text box and text
+            mainContainer.classList.add('text-revealed');
+            
+            // 3. Stop the crown animation after a slight delay for dramatic effect
+            setTimeout(() => {
+                crownActive = false;
+                mainContainer.classList.remove('crown-active');
+            }, 1000); // 1 second delay
+        });
+
+        // Start the process when the page loads
+        document.addEventListener('DOMContentLoaded', startCamera);
+
+        // Resize observer to keep canvas size and crown position correct on orientation change/resize
+        const resizeObserver = new ResizeObserver(entries => {
+            for (let entry of entries) {
+                if (entry.target === cameraFrame && crownActive) {
+                    crownCanvas.width = entry.contentRect.width;
+                    crownCanvas.height = entry.contentRect.height;
+                    // Redraw immediately after resize
+                    drawCrown(); 
+                }
+            }
+        });
+
+        resizeObserver.observe(cameraFrame);
     </script>
 
 </body>
