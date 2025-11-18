@@ -31,12 +31,9 @@
             align-items: center;
             min-height: 100vh;
             overflow-x: hidden; 
-            /* REMOVED: Initial opacity and body fade animation */
         }
         
-        /* Removed #card-wrapper and its animation */
-
-        /* --- CONTAINER & PULSE ANIMATIONS (UNCHANGED) --- */
+        /* --- CONTAINER & PULSE ANIMATIONS --- */
         .container {
             max-width: 900px;
             width: 95%;
@@ -48,9 +45,8 @@
             border: 3px solid var(--color-primary-royal);
             position: relative;
             z-index: 1;
-            /* Reinstated initial transform for container */
             transform: scale(0.9);
-            opacity: 0; /* Container starts hidden */
+            opacity: 0; 
             animation: containerPop 1s ease-out 0.5s forwards, royalPulse 5s infinite alternate; 
         }
         
@@ -83,14 +79,14 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Headings and Paragraphs (Bolder Text) */
+        /* Headings and Paragraphs (UNCHANGED) */
         h1 {
             font-family: 'Great Vibes', cursive;
             color: var(--color-secondary-gold);
             font-size: clamp(2.5em, 8vw, 3.5em);
             margin-bottom: 25px;
             text-shadow: var(--gold-glow);
-            opacity: 0; /* Starts hidden */
+            opacity: 0;
             animation: textSlideIn 1s ease-out 1s forwards;
             transform: translateY(-20px);
         }
@@ -116,21 +112,12 @@
             animation: romanticTextFadeIn 2s ease-out forwards; 
         }
 
-        /* Staggered animation delays (UNCHANGED) */
         .romantic-text p:nth-child(1) { animation-delay: 2.5s; }
         .romantic-text p:nth-child(2) { animation-delay: 3.5s; }
         .romantic-text p:nth-child(3) { animation-delay: 4.5s; }
 
         @keyframes romanticTextFadeIn {
             to { opacity: 1; }
-        }
-
-        /* Main Content Layout (UNCHANGED) */
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            margin-top: 25px;
         }
 
         /* Image Box, Photo Frame, and Image */
@@ -160,8 +147,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* FIX: Remove initial transform to prevent photo from starting small */
-            opacity: 0; /* Photo frame itself is initially hidden */
+            opacity: 0; 
             animation: framePopIn 1s ease-out 1.5s forwards, royalFrameGlow 6s infinite alternate;
             cursor: pointer; 
         }
@@ -169,10 +155,7 @@
             0% { opacity: 0; }
             100% { opacity: 1; }
         }
-        @keyframes royalFrameGlow {
-            0% { box-shadow: 0 0 15px var(--color-secondary-gold), inset 0 0 8px rgba(255, 215, 0, 0.3); }
-            100% { box-shadow: 0 0 25px var(--color-secondary-gold), inset 0 0 12px rgba(255, 215, 0, 0.6); }
-        }
+        
         #princessPhoto {
             position: absolute;
             top: 0;
@@ -182,13 +165,19 @@
             object-fit: cover;
             border-radius: 8px;
             z-index: 1;
-            /* FIX: Photo starts hidden and fades in after doors open */
+            /* Photo starts hidden */
             opacity: 0; 
             filter: saturate(1.1) brightness(1.1);
-            transition: opacity 1s ease-in-out; /* Smooth fade-in */
+            /* Add transition property */
+            transition: opacity 1.2s ease-in-out; 
         }
 
-        /* --- GIFT BOX DOOR STYLING --- */
+        /* NEW: Class added by JS to reveal photo */
+        .photo-frame.revealed #princessPhoto {
+            opacity: 1;
+        }
+
+        /* --- GIFT BOX DOOR STYLING (UNCHANGED) --- */
         .photo-frame-cover {
             position: absolute;
             top: -5px; 
@@ -201,7 +190,7 @@
             z-index: 5; 
             display: flex;
             transition: all 1s ease-in-out; 
-            opacity: 0; /* Starts hidden */
+            opacity: 0; 
             animation: photoFrameCoverFadeIn 1s ease-out 2.5s forwards;
         }
 
@@ -229,27 +218,14 @@
             font-weight: 700; 
         }
 
-        .door-panel.left {
-            left: 0;
-            border-right: none;
-            border-top-left-radius: 10px;
-            border-bottom-left-radius: 10px;
-        }
-
-        .door-panel.right {
-            right: 0;
-            border-left: none;
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
-        }
+        .door-panel.left { left: 0; border-right: none; border-top-left-radius: 10px; border-bottom-left-radius: 10px; }
+        .door-panel.right { right: 0; border-left: none; border-top-right-radius: 10px; border-bottom-right-radius: 10px; }
         
         .door-handle {
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 30px;
-            height: 30px;
+            width: 30px; height: 30px;
             background: var(--color-secondary-gold);
             border-radius: 50%; 
             box-shadow: 0 0 10px var(--color-secondary-gold), 0 0 5px rgba(0, 0, 0, 0.8) inset;
@@ -259,53 +235,28 @@
             animation: handlePulse 3s infinite alternate;
         }
         .door-handle::before {
-            content: '🔑'; 
-            position: absolute;
-            top: 50%;
-            left: 50%;
+            content: '🔑'; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 16px;
-            opacity: 0.8;
+            font-size: 16px; opacity: 0.8;
             pointer-events: none;
         }
-        @keyframes handlePulse {
-            0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 10px var(--color-secondary-gold), 0 0 5px rgba(0, 0, 0, 0.8) inset; }
-            100% { transform: translate(-50%, -50%) scale(1.05); box-shadow: 0 0 20px var(--color-secondary-gold), 0 0 8px rgba(0, 0, 0, 0.6) inset; }
-        }
 
-        /* Animation for opening the doors */
-        .photo-frame-cover.open .door-panel.left {
-            transform: translateX(-100%); 
-            opacity: 0;
-        }
-        .photo-frame-cover.open .door-panel.right {
-            transform: translateX(100%); 
-            opacity: 0;
-        }
-        .photo-frame-cover.open .door-handle {
-            opacity: 0;
-            transition: opacity 0.5s ease-out 0.5s;
-        }
-        /* --- END GIFT BOX DOOR STYLING --- */
-
-
-        /* Text Box (UNCHANGED GLOW) */
+        /* Door Open Animations (UNCHANGED) */
+        .photo-frame-cover.open .door-panel.left { transform: translateX(-100%); opacity: 0; }
+        .photo-frame-cover.open .door-panel.right { transform: translateX(100%); opacity: 0; }
+        .photo-frame-cover.open .door-handle { opacity: 0; transition: opacity 0.5s ease-out 0.5s; }
+        
+        /* Text Box and Tease (UNCHANGED) */
         .text-box {
             background: var(--color-surface-dark);
             padding: 20px;
             border-radius: 15px;
             border: 2px solid var(--color-primary-royal);
-            opacity: 0; /* Starts hidden */
+            opacity: 0; 
             animation: fadeIn 1.5s ease-out 2s forwards, royalPulseText 6s infinite alternate;
             box-shadow: 0 0 8px rgba(167, 0, 174, 0.7) inset; 
         }
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-        @keyframes royalPulseText {
-            0% { box-shadow: 0 0 5px rgba(167, 0, 174, 0.5); }
-            100% { box-shadow: 0 0 15px rgba(167, 0, 174, 1); }
-        }
+        @keyframes fadeIn { to { opacity: 1; } }
 
         .tease {
             margin-top: 35px;
@@ -315,34 +266,19 @@
             font-style: italic;
             text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
             font-weight: 500;
-            opacity: 0; /* Starts hidden */
+            opacity: 0; 
             animation: fadeIn 1s ease-out 5s forwards;
         }
 
         /* Responsive Adjustments (UNCHANGED) */
         @media (min-width: 768px) {
-            .main-content {
-                flex-direction: row;
-                justify-content: center;
-                align-items: flex-start;
-            }
-            .image-box, .text-box {
-                flex: 1;
-                padding: 30px;
-            }
-            .photo-frame {
-                max-width: 400px;
-                padding-top: 400px;
-            }
-            .text-box {
-                margin-left: 30px;
-            }
+            .main-content { flex-direction: row; justify-content: center; align-items: flex-start; }
+            .image-box, .text-box { flex: 1; padding: 30px; }
+            .photo-frame { max-width: 400px; padding-top: 400px; }
+            .text-box { margin-left: 30px; }
         }
         @media (max-width: 480px) {
-            .photo-frame {
-                width: 95%;
-                padding-top: 95%;
-            }
+            .photo-frame { width: 95%; padding-top: 95%; }
         }
     </style>
 </head>
@@ -400,20 +336,22 @@
 
         // Fallback for image loading error
         princessPhoto.onerror = () => {
-            alert("💔 Error loading princess.png. Check file path! 💔");
+            alert("💔 Error loading princess.png. Check file path!💔");
         };
 
-        // --- Gift Box Door Reveal Logic ---
+        // --- Final Gift Box Door Reveal Logic ---
         photoFrame.addEventListener('click', () => {
             if (!photoFrameCover.classList.contains('open')) {
+                // 1. Open the doors
                 photoFrameCover.classList.add('open');
-                // FIX: Now photo fades in ONLY after doors start opening
-                setTimeout(() => {
-                    princessPhoto.style.opacity = 1;
-                }, 500); // Small delay to let doors start animating first
+
+                // 2. Add the 'revealed' class to the photo frame to trigger the photo's fade-in (CSS rule)
+                photoFrame.classList.add('revealed');
+                
+                // (No more complex setTimeout needed, CSS transition handles the rest!)
             }
         });
-        // --- End Gift Box Door Reveal Logic ---
+        // --- End Final Gift Box Door Reveal Logic ---
 
     </script>
 
