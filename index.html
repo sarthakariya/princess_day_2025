@@ -31,15 +31,24 @@
             align-items: center;
             min-height: 100vh;
             overflow-x: hidden; 
-            opacity: 0;
-            animation: bodyFadeIn 1.5s ease-out forwards;
+            /* REMOVED: Initial opacity and body fade animation to prevent content hiding */
         }
-
-        @keyframes bodyFadeIn {
+        
+        /* --- NEW: Wrapper for controlled loading/visibility --- */
+        #card-wrapper {
+            opacity: 0;
+            /* Delayed fade-in to ensure all styling is applied */
+            animation: wrapperFadeIn 1.5s ease-out 0.5s forwards; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        @keyframes wrapperFadeIn {
             to { opacity: 1; }
         }
 
-        /* --- CONTAINER & PULSE ANIMATIONS (UNCHANGED) --- */
+        /* --- CONTAINER & PULSE ANIMATIONS --- */
         .container {
             max-width: 900px;
             width: 95%;
@@ -52,13 +61,13 @@
             position: relative;
             z-index: 1;
             transform: scale(0.9);
-            animation: containerPop 1s ease-out 0.5s forwards, royalPulse 5s infinite alternate;
+            /* Updated timing to rely on wrapper fade-in */
+            animation: containerPop 1s ease-out 0.5s forwards, royalPulse 5s infinite alternate; 
         }
         
         @keyframes containerPop {
-            0% { transform: scale(0.9); opacity: 0; }
-            70% { transform: scale(1.01); opacity: 1; }
-            100% { transform: scale(1); opacity: 1; }
+            0% { transform: scale(0.9); }
+            100% { transform: scale(1); }
         }
 
         @keyframes royalPulse {
@@ -115,7 +124,25 @@
             color: var(--color-secondary-gold);
             text-shadow: var(--gold-glow);
             opacity: 0;
-            animation: romanticTextFadeIn 2s ease-out forwards;
+            /* Delayed animation, now visible after wrapper fade-in */
+            animation: romanticTextFadeIn 2s ease-out forwards; 
+        }
+
+        /* Staggered animation delays (UNCHANGED) */
+        .romantic-text p:nth-child(1) { animation-delay: 2.5s; }
+        .romantic-text p:nth-child(2) { animation-delay: 3.5s; }
+        .romantic-text p:nth-child(3) { animation-delay: 4.5s; }
+
+        @keyframes romanticTextFadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Main Content Layout (UNCHANGED) */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-top: 25px;
         }
 
         /* Photo Frame and Image */
@@ -133,7 +160,7 @@
             justify-content: center;
             align-items: center;
             transform: scale(0.8);
-            opacity: 0;
+            /* Removed opacity: 0 as it caused the first line of text to show alone */
             animation: framePopIn 1s ease-out 1.5s forwards, royalFrameGlow 6s infinite alternate;
             cursor: pointer; 
         }
@@ -146,10 +173,9 @@
             object-fit: cover;
             border-radius: 8px;
             z-index: 1;
-            /* FIX: Ensure photo is loaded and visible (opacity 1) but hidden by the doors */
             opacity: 1; 
             filter: saturate(1.1) brightness(1.1);
-            transition: none; /* Remove JS opacity transition */
+            transition: none; 
         }
 
         /* --- GIFT BOX DOOR STYLING --- */
@@ -165,7 +191,7 @@
             z-index: 5; 
             display: flex;
             transition: all 1s ease-in-out; 
-            /* Added animation to initially hide the doors slightly so they appear later */
+            /* Animation for doors to appear */
             animation: photoFrameCoverFadeIn 1s ease-out 2.5s forwards;
             opacity: 0;
         }
@@ -186,13 +212,12 @@
             align-items: center;
             justify-content: center;
             font-family: 'Playfair Display', serif;
-            /* Shorter Font Size */
             font-size: clamp(0.9em, 3.5vw, 1.2em); 
             color: var(--color-secondary-gold);
             text-shadow: 0 0 8px var(--color-secondary-gold);
             cursor: pointer;
             opacity: 1;
-            font-weight: 700; /* Bolder text on doors */
+            font-weight: 700; 
         }
 
         .door-panel.left {
@@ -209,7 +234,6 @@
             border-bottom-right-radius: 10px;
         }
         
-        /* --- NEW: Handle Visual --- */
         .door-handle {
             position: absolute;
             top: 50%;
@@ -218,15 +242,15 @@
             width: 30px;
             height: 30px;
             background: var(--color-secondary-gold);
-            border-radius: 50%; /* Circle shape */
+            border-radius: 50%; 
             box-shadow: 0 0 10px var(--color-secondary-gold), 0 0 5px rgba(0, 0, 0, 0.8) inset;
             z-index: 10;
-            pointer-events: none; /* Ensures click goes through to the frame */
+            pointer-events: none; 
             border: 2px solid #fff;
             animation: handlePulse 3s infinite alternate;
         }
         .door-handle::before {
-            content: '🔑'; /* Key emoji as a visual cue */
+            content: '🔑'; 
             position: absolute;
             top: 50%;
             left: 50%;
@@ -263,8 +287,7 @@
             padding: 20px;
             border-radius: 15px;
             border: 2px solid var(--color-primary-royal);
-            opacity: 0;
-            animation: fadeIn 1.5s ease-out 2s forwards, royalPulseText 6s infinite alternate;
+            /* Removed initial opacity and animation to prevent "did you find the treasure" text from appearing alone */
             box-shadow: 0 0 8px rgba(167, 0, 174, 0.7) inset; 
         }
 
@@ -275,7 +298,6 @@
             opacity: 0.9;
             font-style: italic;
             text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
-            animation: fadeIn 1s ease-out 5s forwards;
             font-weight: 500;
         }
 
@@ -307,52 +329,55 @@
     </style>
 </head>
 <body>
+    
+    <div id="card-wrapper">
 
-    <div class="container">
-        <h1>👑 Happyyyy Princess Day my Queen 💖</h1>
-        
-        <div class="main-content">
-            <div class="image-box">
-                <p>Did you find the treasure? yes I did... Just look below what I have found... 👀🤌🏼✨</p>
-                <div class="photo-frame" id="photoFrame">
-                    <img id="princessPhoto" src="princess.png" alt="My Beautiful Princess">
+        <div class="container">
+            <h1>👑 Happyyyy Princess Day my Queen 💖</h1>
+            
+            <div class="main-content">
+                <div class="image-box">
+                    <p>Did you find the treasure? yes I did... Just look below what I have found... 👀🤌🏼✨</p>
+                    <div class="photo-frame" id="photoFrame">
+                        <img id="princessPhoto" src="princess.png" alt="My Beautiful Princess">
+                        
+                        <div class="photo-frame-cover" id="photoFrameCover">
+                            <div class="door-panel left"><span>🔑 Tap to Open 💖</span></div>
+                            <div class="door-panel right"></div>
+                            <div class="door-handle"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-box">
+                    <p class="romantic-text">
+                        Yeah, I have found the real treasure, YOU... Because no treasure, no map, no kingdom could ever shine brighter than this girl...
+                        <br><br>
+                        This radiant face right here?
+                    </p>
                     
-                    <div class="photo-frame-cover" id="photoFrameCover">
-                        <div class="door-panel left"><span>🔑 Tap to Open 💖</span></div>
-                        <div class="door-panel right"></div>
-                        <div class="door-handle"></div> </div>
+                    <p class="romantic-text">
+                        This is the girl I call **my princess.**
+                        <br>
+                        My ultimate treasure. Look at the face, the smile, the glow... 🤌🏼✨✨ Do you know what I see?
+                        I see my princess. My happiness... My favourite person. My precious treasure I never want to lose...
+                    </p>
+                    
+                    <p class="romantic-text">
+                        My heart's true person and today, on Princess Day, I want you to remember just one thing, I will choose you every single day and every breath I take in.... in every lifetime... You’re not just a treasure on map… You are the destination to my heart, that never stops and will never stop reaching for you, my Princesss... 🥹💖💝❤️🫶🏼💕💓💗💗💗
+                        <br><br>
+                        If there is a final treasure in this world… it isn’t gold or diamonds, it’s you with whom my forever begins and ends with... that's where my heart decided to live today, tomorrow, and every life after this with only YOUUU... 😌😌💓🥹✨💖💝❤️❤️❤️
+                    </p>
                 </div>
             </div>
-            
-            <div class="text-box">
-                <p class="romantic-text">
-                    Yeah, I have found the real treasure, YOU... Because no treasure, no map, no kingdom could ever shine brighter than this girl...
-                    <br><br>
-                    This radiant face right here?
-                </p>
-                
-                <p class="romantic-text">
-                    This is the girl I call **my princess.**
-                    <br>
-                    My ultimate treasure. Look at the face, the smile, the glow... 🤌🏼✨✨ Do you know what I see?
-                    I see my princess. My happiness... My favourite person. My precious treasure I never want to lose...
-                </p>
-                
-                <p class="romantic-text">
-                    My heart's true person and today, on Princess Day, I want you to remember just one thing, I will choose you every single day and every breath I take in.... in every lifetime... You’re not just a treasure on map… You are the destination to my heart, that never stops and will never stop reaching for you, my Princesss... 🥹💖💝❤️🫶🏼💕💓💗💗💗
-                    <br><br>
-                    If there is a final treasure in this world… it isn’t gold or diamonds, it’s you with whom my forever begins and ends with... that's where my heart decided to live today, tomorrow, and every life after this with only YOUUU... 😌😌💓🥹✨💖💝❤️❤️❤️
-                </p>
-            </div>
+
+            <p class="tease">
+                **Psss** Warning: This treasure is extremely dangerous to my breathing, heartbeat and my self control... proceed with caution! 😉🌚🌚
+            </p>
+
         </div>
 
-        <p class="tease">
-            **Psss** Warning: This treasure is extremely dangerous to my breathing, heartbeat and my self control... proceed with caution! 😉🌚🌚
-        </p>
-
-    </div>
-
-    <script>
+    </div> <script>
         const princessPhoto = document.getElementById('princessPhoto');
         const photoFrame = document.getElementById('photoFrame');
         const photoFrameCover = document.getElementById('photoFrameCover');
@@ -366,9 +391,6 @@
         photoFrame.addEventListener('click', () => {
             if (!photoFrameCover.classList.contains('open')) {
                 photoFrameCover.classList.add('open');
-                
-                // FIX: Removed JS photo reveal logic as the photo is now visible by default (opacity: 1 in CSS)
-                // We rely on the doors simply sliding away to reveal the image underneath.
             }
         });
         // --- End Gift Box Door Reveal Logic ---
