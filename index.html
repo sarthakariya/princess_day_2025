@@ -30,9 +30,7 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            /* --- SCROLLING ENABLED: Removed 'overflow: hidden' --- */
-            overflow-x: hidden; /* Keep horizontal hidden to prevent side scroll on phones */
-            /* ---------------------------------------------------- */
+            overflow-x: hidden; 
             opacity: 0;
             animation: bodyFadeIn 1.5s ease-out forwards;
         }
@@ -41,7 +39,7 @@
             to { opacity: 1; }
         }
 
-        /* --- CONTAINER: ORNATE ROYAL PANEL (UNCHANGED) --- */
+        /* --- CONTAINER: ORNATE ROYAL PANEL --- */
         .container {
             max-width: 900px;
             width: 95%;
@@ -87,7 +85,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Headings and Paragraphs (UNCHANGED FONT WEIGHTS) */
+        /* Headings and Paragraphs (Bolder Text) */
         h1 {
             font-family: 'Great Vibes', cursive;
             color: var(--color-secondary-gold);
@@ -108,7 +106,7 @@
             line-height: 1.7;
             margin-bottom: 18px;
             color: var(--color-tertiary-pink);
-            font-weight: 500; /* Bolder weight for Playfair Display */
+            font-weight: 500; 
         }
         .romantic-text p {
             font-family: 'Great Vibes', cursive;
@@ -137,7 +135,7 @@
             margin-top: 25px;
         }
 
-        /* Image Box, Photo Frame, and Photo (UNCHANGED) */
+        /* Image Box, Photo Frame, and Photo */
         .image-box {
             position: relative;
             background: var(--color-background-dark);
@@ -145,7 +143,6 @@
             border-radius: 15px;
             box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.2);
             border: 2px solid var(--color-secondary-gold);
-            /* Removed inner overflow:hidden if it existed */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -166,13 +163,14 @@
             border-radius: 10px;
             box-shadow: 0 0 20px var(--color-secondary-gold), inset 0 0 10px rgba(255, 215, 0, 0.4);
             background: #444;
-            overflow: hidden;
+            /* REMOVED: overflow:hidden from photo-frame to allow doors to be larger */
             display: flex;
             justify-content: center;
             align-items: center;
             transform: scale(0.8);
             opacity: 0;
             animation: framePopIn 1s ease-out 1.5s forwards, royalFrameGlow 6s infinite alternate;
+            cursor: pointer; /* Indicate it's clickable */
         }
         @keyframes framePopIn {
             0% { transform: scale(0.8); opacity: 0; }
@@ -192,13 +190,81 @@
             object-fit: cover;
             border-radius: 8px;
             z-index: 1;
-            opacity: 0;
-            animation: photoFadeIn 1s ease-out 2s forwards;
-            filter: saturate(1.1) brightness(1.1);
+            opacity: 0; /* Initially hidden, revealed by JS after doors open */
+            animation: photoFadeIn 1s ease-out 2s forwards; /* Keep initial fade-in */
         }
+        /* Keep photoFadeIn for initial presentation, doors will hide it */
         @keyframes photoFadeIn {
             to { opacity: 1; }
         }
+
+
+        /* --- NEW: GIFT BOX DOOR STYLING --- */
+        .photo-frame-cover {
+            position: absolute;
+            top: -5px; /* Slightly larger than frame to cover borders */
+            left: -5px;
+            width: calc(100% + 10px);
+            height: calc(100% + 10px);
+            background: var(--color-surface-dark); /* Dark surface for the doors */
+            border-radius: 10px; /* Match photo-frame */
+            overflow: hidden; /* Contains the door panels */
+            z-index: 5; /* Above the photo */
+            display: flex;
+            transition: all 1s ease-in-out; /* Smooth transition for door movement */
+        }
+
+        .door-panel {
+            position: absolute;
+            width: 50%; /* Each panel covers half */
+            height: 100%;
+            background: var(--color-background-dark); /* Slightly darker for distinct panels */
+            border: 2px solid var(--color-secondary-gold);
+            box-shadow: inset 0 0 15px rgba(255, 215, 0, 0.4), var(--gold-glow); /* Glowing edge effect */
+            transition: transform 1.2s ease-in-out, opacity 1.2s ease-in-out; /* Door opening animation */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            color: var(--color-secondary-gold);
+            font-size: clamp(1em, 4vw, 1.5em);
+            text-shadow: 0 0 8px var(--color-secondary-gold);
+            cursor: pointer;
+            opacity: 1;
+        }
+
+        .door-panel.left {
+            left: 0;
+            border-right: none;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            transform-origin: left center;
+        }
+
+        .door-panel.right {
+            right: 0;
+            border-left: none;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            transform-origin: right center;
+        }
+
+        /* Animation for opening the doors */
+        .photo-frame-cover.open .door-panel.left {
+            transform: translateX(-100%) scale(0.8); /* Slide left and slightly shrink */
+            opacity: 0;
+        }
+        .photo-frame-cover.open .door-panel.right {
+            transform: translateX(100%) scale(0.8); /* Slide right and slightly shrink */
+            opacity: 0;
+        }
+        /* Text on doors fades out */
+        .photo-frame-cover.open .door-panel span {
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+        /* --- END NEW: GIFT BOX DOOR STYLING --- */
+
 
         /* Text Box (UNCHANGED GLOW) */
         .text-box {
@@ -227,34 +293,6 @@
             text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
             animation: fadeIn 1s ease-out 5s forwards;
             font-weight: 500;
-        }
-
-        /* --- SPARKLING GLINTS (UNCHANGED) --- */
-        /* Note: Particles use 'position: fixed' to prevent them from scrolling with the page, 
-           maintaining a constant magical overlay effect. */
-        .royal-spark {
-            position: fixed;
-            font-size: clamp(0.6em, 2.5vw, 1em);
-            color: var(--color-secondary-gold);
-            text-shadow: 0 0 5px var(--color-secondary-gold), 0 0 10px rgba(255, 215, 0, 0.5);
-            opacity: 0;
-            pointer-events: none;
-            z-index: 9999;
-            animation: sparkFall var(--duration) linear infinite;
-        }
-
-        @keyframes sparkFall {
-            0% {
-                transform: translate(var(--x-start), -10vh) scale(0) rotate(0deg);
-                opacity: 0;
-            }
-            10% { opacity: 0.6; transform: translate(var(--x-start), 10vh) scale(1) rotate(20deg); }
-            50% { opacity: 0.8; transform: translate(calc(var(--x-start) + var(--x-sway)), 50vh) scale(1.2) rotate(40deg); }
-            90% { opacity: 0.5; transform: translate(var(--x-end), 90vh) scale(1.1) rotate(60deg); }
-            100% {
-                transform: translate(var(--x-end), 110vh) scale(0) rotate(80deg);
-                opacity: 0;
-            }
         }
 
         /* Responsive Adjustments (UNCHANGED) */
@@ -292,9 +330,14 @@
         <div class="main-content">
             <div class="image-box">
                 <p>Did you find the treasure? yes I did... Just look below what I have found... 👀🤌🏼✨</p>
-                <div class="photo-frame">
+                <div class="photo-frame" id="photoFrame">
                     <img id="princessPhoto" src="princess.png" alt="My Beautiful Princess">
-                </div>
+                    
+                    <div class="photo-frame-cover" id="photoFrameCover">
+                        <div class="door-panel left"><span>Open the Treasure</span></div>
+                        <div class="door-panel right"><span>💖</span></div>
+                    </div>
+                    </div>
             </div>
             
             <div class="text-box">
@@ -314,7 +357,7 @@
                 <p class="romantic-text">
                     My heart's true person and today, on Princess Day, I want you to remember just one thing, I will choose you every single day and every breath I take in.... in every lifetime... You’re not just a treasure on map… You are the destination to my heart, that never stops and will never stop reaching for you, my Princesss... 🥹💖💝❤️🫶🏼💕💓💗💗💗
                     <br><br>
-                    If there is a final treasure in this world… it isn’t gold or diamonds, it isn’t jewels.., it’s you with whom my forever begins and ends with... that's where my heart decided to live today, tomorrow, and every life after this with only YOUUU... 😌😌💓🥹✨💖💝❤️❤️❤️
+                    If there is a final treasure in this world… it isn’t gold or diamonds, it’s you with whom my forever begins and ends with... that's where my heart decided to live today, tomorrow, and every life after this with only YOUUU... 😌😌💓🥹✨💖💝❤️❤️❤️
                 </p>
             </div>
         </div>
@@ -327,55 +370,29 @@
 
     <script>
         const princessPhoto = document.getElementById('princessPhoto');
-        let sparkInterval; 
-        
-        const sparkList = ['✨', '⭐', '🌟', '💖', '💎']; 
+        const photoFrame = document.getElementById('photoFrame');
+        const photoFrameCover = document.getElementById('photoFrameCover');
 
         // Fallback for image loading error
         princessPhoto.onerror = () => {
             alert("💔 Error loading princess.png. Check file path! 💔");
         };
 
-        // --- Royal Sparkle / Fairy Dust Animation (UNCHANGED LOGIC) ---
-
-        function createSpark() {
-            const spark = document.createElement('div');
-            spark.classList.add('royal-spark');
-            
-            spark.textContent = sparkList[Math.floor(Math.random() * sparkList.length)];
-            
-            document.body.appendChild(spark);
-
-            const duration = Math.random() * 10 + 10;
-            const delay = Math.random() * 5;
-
-            const startX = Math.random() * 100 + 'vw';
-            const endX = parseFloat(startX) + (Math.random() - 0.5) * 30 + 'vw';
-            const xSway = (Math.random() - 0.5) * 40 + 'vw';
-
-            spark.style.setProperty('--x-start', startX);
-            spark.style.setProperty('--x-end', endX);
-            spark.style.setProperty('--x-sway', xSway);
-            spark.style.setProperty('--duration', duration + 's');
-            spark.style.animationDelay = delay + 's';
-
-            spark.addEventListener('animationend', () => {
-                spark.remove();
-            });
-        }
-        
-        sparkInterval = setInterval(createSpark, 300);
-
-        const animationDuration = 15000; 
-
-        setTimeout(() => {
-            clearInterval(sparkInterval); 
-            document.querySelectorAll('.royal-spark').forEach(s => {
-                s.style.opacity = 0;
-                s.style.transition = 'opacity 3s ease-out';
-                setTimeout(() => s.remove(), 3000);
-            });
-        }, animationDuration);
+        // --- NEW: Gift Box Door Reveal Logic ---
+        photoFrame.addEventListener('click', () => {
+            // Check if doors are already open to prevent repeated animation
+            if (!photoFrameCover.classList.contains('open')) {
+                photoFrameCover.classList.add('open');
+                
+                // Optional: Fade in the photo slightly after doors start opening
+                // to make the reveal more dynamic
+                setTimeout(() => {
+                    princessPhoto.style.opacity = 1;
+                    princessPhoto.style.transition = 'opacity 1s ease-in-out';
+                }, 500); // Adjust delay as needed
+            }
+        });
+        // --- END NEW: Gift Box Door Reveal Logic ---
 
     </script>
 
