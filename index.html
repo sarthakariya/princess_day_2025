@@ -3,14 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Princess's Treasure</title>
+    <title>My Princess's Treasure // Royal Decree</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes:wght@400&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* --- ROYAL DARK THEME SETUP --- */
+        :root {
+            --color-primary-royal: #a700ae; /* Deep Royal Magenta/Purple */
+            --color-secondary-gold: #ffd700; /* Gold */
+            --color-tertiary-pink: #ffc0cb; /* Soft Pink */
+            --color-background-dark: #1a001a; /* Very Dark Purple */
+            --color-surface-dark: #330033; /* Darker Purple Surface */
+            --royal-shadow-dark: 0 0 15px rgba(167, 0, 174, 0.7), 0 0 30px rgba(255, 215, 0, 0.3);
+            --gold-glow: 0 0 15px rgba(255, 215, 0, 0.9), 0 0 30px rgba(255, 215, 0, 0.5);
+            --royal-gradient-bg: linear-gradient(135deg, #1a001a 0%, #3a003a 100%);
+            --royal-text-gradient: linear-gradient(45deg, #ffd700, #a700ae); /* Gold to Purple */
+        }
+
         /* General Body and Background */
         body {
             font-family: 'Playfair Display', serif;
-            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
-            color: #4a148c;
+            background: var(--royal-gradient-bg); /* Deep royal gradient */
+            color: var(--color-tertiary-pink); /* Soft pink for general text */
             text-align: center;
             padding: 15px;
             margin: 0;
@@ -18,51 +31,57 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden;
+            overflow: hidden; /* Prevent scrolls from particles */
             opacity: 0;
-            animation: bodyFadeIn 2s ease-out forwards;
+            animation: bodyFadeIn 1.5s ease-out forwards;
         }
 
         @keyframes bodyFadeIn {
             to { opacity: 1; }
         }
 
-        /* Main Container for content */
+        /* --- CONTAINER: ORNATE ROYAL PANEL --- */
         .container {
             max-width: 900px;
             width: 95%;
             margin: auto;
-            background: rgba(255, 255, 255, 0.98);
+            background: var(--color-surface-dark); /* Darker purple surface */
             padding: 25px;
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(74, 20, 140, 0.4);
-            border: 4px solid #ab47bc;
+            border-radius: 15px; /* Softer, royal rounded corners */
+            box-shadow: var(--royal-shadow-dark); /* Rich glowing shadow */
+            border: 3px solid var(--color-primary-royal); /* Deep royal border */
             position: relative;
             overflow: hidden;
             z-index: 1;
             transform: scale(0.9);
-            animation: containerPop 1s ease-out 0.5s forwards;
+            animation: containerPop 1s ease-out 0.5s forwards, royalPulse 5s infinite alternate; /* Soft, regal pulse */
         }
-
+        
         @keyframes containerPop {
             0% { transform: scale(0.9); opacity: 0; }
-            70% { transform: scale(1.02); opacity: 1; }
+            70% { transform: scale(1.01); opacity: 1; }
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* Decorative flourishes for the container (UNCHANGED) */
+        @keyframes royalPulse {
+            0% { box-shadow: var(--royal-shadow-dark); }
+            100% { box-shadow: 0 0 20px rgba(167, 0, 174, 0.9), 0 0 40px rgba(255, 215, 0, 0.4); }
+        }
+
+        /* Decorative flourishes for the container (More ornate/royal) */
         .container::before, .container::after {
             content: '';
             position: absolute;
-            width: 70px;
-            height: 70px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23ab47bc" d="M50 0C22.4 0 0 22.4 0 50s22.4 50 50 50 50-22.4 50-50S77.6 0 50 0zm0 88.5c-21.2 0-38.5-17.3-38.5-38.5S28.8 11.5 50 11.5s38.5 17.3 38.5 38.5-17.3 38.5-38.5 38.5zM50 25c-13.8 0-25 11.2-25 25s11.2 25 25 25 25-11.2 25-25-11.2-25-25-25z"/><path fill="%238e24aa" d="M50 37.5c-6.9 0-12.5 5.6-12.5 12.5s5.6 12.5 12.5 12.5 12.5-5.6 12.5-12.5-5.6-12.5-12.5-12.5z"/></svg>') no-repeat center center;
+            width: 80px; /* Larger flourishes */
+            height: 80px;
+            /* Ornate SVG for a regal touch */
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23ffd700" d="M50 0C25 0 0 25 0 50s25 50 50 50 50-25 50-50S75 0 50 0zM50 10c11.05 0 20 8.95 20 20s-8.95 20-20 20-20-8.95-20-20 8.95-20 20-20zM50 60c-16.57 0-30 13.43-30 30h60c0-16.57-13.43-30-30-30z"/></svg>') no-repeat center center;
             background-size: contain;
-            opacity: 0.2;
-            animation: rotateFlourish 10s linear infinite;
+            opacity: 0.3;
+            animation: rotateFlourish 15s linear infinite;
         }
-        .container::before { top: -25px; left: -25px; }
-        .container::after { bottom: -25px; right: -25px; transform: rotate(180deg); }
+        .container::before { top: -30px; left: -30px; }
+        .container::after { bottom: -30px; right: -30px; transform: rotate(180deg); }
 
         @keyframes rotateFlourish {
             from { transform: rotate(0deg); }
@@ -72,11 +91,10 @@
         /* Headings and Paragraphs */
         h1 {
             font-family: 'Great Vibes', cursive;
-            color: #6a1b9a;
-            /* FONT ADJUSTMENT: Reduced max size from 4.5em to 3.5em */
+            color: var(--color-secondary-gold); /* Gold title */
             font-size: clamp(2.5em, 8vw, 3.5em);
             margin-bottom: 25px;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.15);
+            text-shadow: var(--gold-glow); /* Stronger gold glow */
             animation: textSlideIn 1s ease-out 1s forwards;
             opacity: 0;
             transform: translateY(-20px);
@@ -87,17 +105,17 @@
         }
 
         p {
-            /* FONT ADJUSTMENT: Reduced max size from 1.1em to 1.0em */
             font-size: clamp(0.9em, 3.5vw, 1.0em);
             line-height: 1.7;
             margin-bottom: 18px;
+            color: var(--color-tertiary-pink); /* Soft pink for general text */
         }
         .romantic-text p {
             font-family: 'Great Vibes', cursive;
-            /* FONT ADJUSTMENT: Reduced max size from 2.2em to 1.7em */
             font-size: clamp(1.3em, 5vw, 1.7em);
             font-weight: 400;
-            color: #4a148c;
+            color: var(--color-secondary-gold); /* Gold for romantic text */
+            text-shadow: var(--gold-glow);
             opacity: 0;
             animation: romanticTextFadeIn 2s ease-out forwards;
         }
@@ -111,49 +129,65 @@
             to { opacity: 1; }
         }
 
-        /* Rest of layout and photo styles (UNCHANGED) */
+        /* Main Content Layout (UNCHANGED) */
         .main-content {
             display: flex;
             flex-direction: column;
             gap: 25px;
             margin-top: 25px;
         }
+
+        /* --- IMAGE BOX: ORNATE HOLDER --- */
         .image-box {
             position: relative;
-            background: #e0f2f7;
+            background: var(--color-background-dark); /* Darker interior */
             padding: 15px;
-            border-radius: 20px;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
-            border: 3px solid #6a1b9a;
+            border-radius: 15px;
+            box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.2);
+            border: 2px solid var(--color-secondary-gold); /* Gold border */
             overflow: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            animation: goldPulseBox 4s infinite alternate;
         }
+
+        @keyframes goldPulseBox {
+            0% { box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.4); }
+            100% { box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.8); }
+        }
+
+        /* --- PHOTO FRAME: ROYAL STEEL / GOLDEN ORNATE --- */
         .photo-frame {
             position: relative;
             width: 90%;
             max-width: 400px;
             padding-top: 90%;
             margin: 0 auto 20px auto;
-            border: 8px double #ffd700;
-            border-radius: 15px;
-            box-shadow: 0 0 25px rgba(255,215,0,0.8), inset 0 0 12px rgba(255,215,0,0.6);
-            background: linear-gradient(45deg, #fff3e0, #ffecb3);
+            /* Steel-like royal border with gold glow */
+            border: 5px solid silver; /* Base for steel look */
+            border-radius: 10px; /* Slightly rounded corners */
+            box-shadow: 0 0 20px var(--color-secondary-gold), inset 0 0 10px rgba(255, 215, 0, 0.4); /* Gold glow */
+            background: #444; /* Dark metallic interior */
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             transform: scale(0.8);
             opacity: 0;
-            animation: framePopIn 1s ease-out 1.5s forwards;
+            animation: framePopIn 1s ease-out 1.5s forwards, royalFrameGlow 6s infinite alternate; /* Continuous royal glow */
         }
         @keyframes framePopIn {
             0% { transform: scale(0.8); opacity: 0; }
             70% { transform: scale(1.02); opacity: 1; }
             100% { transform: scale(1); opacity: 1; }
         }
+        @keyframes royalFrameGlow {
+            0% { box-shadow: 0 0 15px var(--color-secondary-gold), inset 0 0 8px rgba(255, 215, 0, 0.3); }
+            100% { box-shadow: 0 0 25px var(--color-secondary-gold), inset 0 0 12px rgba(255, 215, 0, 0.6); }
+        }
+
         #princessPhoto {
             position: absolute;
             top: 0;
@@ -161,56 +195,65 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 10px;
+            border-radius: 8px; /* Match frame inner corners */
             z-index: 1;
             opacity: 0;
             animation: photoFadeIn 1s ease-out 2s forwards;
+            filter: saturate(1.1) brightness(1.1); /* Slightly enhance image for dark theme */
         }
         @keyframes photoFadeIn {
             to { opacity: 1; }
         }
+
+        /* Text Box */
         .text-box {
-            background: #f3e5f5;
+            background: var(--color-surface-dark);
             padding: 20px;
-            border-radius: 20px;
-            border: 3px solid #ab47bc;
+            border-radius: 15px;
+            border: 2px solid var(--color-primary-royal);
             opacity: 0;
-            animation: fadeIn 1.5s ease-out 2s forwards;
+            animation: fadeIn 1.5s ease-out 2s forwards, royalPulseText 6s infinite alternate;
         }
         @keyframes fadeIn {
             to { opacity: 1; }
         }
+        @keyframes royalPulseText {
+            0% { box-shadow: 0 0 5px rgba(167, 0, 174, 0.5); }
+            100% { box-shadow: 0 0 10px rgba(167, 0, 174, 1); }
+        }
+
         .tease {
             margin-top: 35px;
             font-size: clamp(0.9em, 3.2vw, 1.0em);
-            color: #880e4f;
-            opacity: 0.8;
+            color: #d1b464; /* Muted gold for tease text */
+            opacity: 0.9;
             font-style: italic;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
             animation: fadeIn 1s ease-out 5s forwards;
         }
-
-        /* NEW: Subtle Bubble Animation */
-        .bubble {
+        
+        /* --- FALLING ROYAL SPARKS / FAIRY DUST --- */
+        .royal-spark {
             position: fixed;
-            background-color: rgba(255, 255, 255, 0.6); /* Slightly visible white/pink bubble */
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.7) inset;
+            font-size: clamp(0.6em, 2.5vw, 1em); /* Smaller, more subtle */
+            color: var(--color-secondary-gold); /* Gold color */
+            text-shadow: 0 0 5px var(--color-secondary-gold), 0 0 10px rgba(255, 215, 0, 0.5);
             opacity: 0;
             pointer-events: none;
             z-index: 9999;
-            animation: bubbleFloat var(--duration) linear infinite;
+            animation: sparkFall var(--duration) linear infinite;
         }
 
-        @keyframes bubbleFloat {
+        @keyframes sparkFall {
             0% {
-                transform: translate(var(--x-start), 110vh) scale(0);
+                transform: translate(var(--x-start), -10vh) scale(0) rotate(0deg);
                 opacity: 0;
             }
-            10% { opacity: 0.7; transform: translate(var(--x-start), 90vh) scale(1); }
-            90% { opacity: 0.5; transform: translate(var(--x-end), 10vh) scale(1.2); }
+            10% { opacity: 0.6; transform: translate(var(--x-start), 10vh) scale(1) rotate(20deg); }
+            50% { opacity: 0.8; transform: translate(calc(var(--x-start) + var(--x-sway)), 50vh) scale(1.2) rotate(40deg); }
+            90% { opacity: 0.5; transform: translate(var(--x-end), 90vh) scale(1.1) rotate(60deg); }
             100% {
-                transform: translate(var(--x-end), -10vh) scale(0);
+                transform: translate(var(--x-end), 110vh) scale(0) rotate(80deg);
                 opacity: 0;
             }
         }
@@ -278,61 +321,67 @@
         </div>
 
         <p class="tease">
-            **Psss** This treasure is extremely dangerous to my breathing, heartbeat and my self control... proceed with caution! 😉🌚🌚
+            **Psss** Warning: This treasure is extremely dangerous to my breathing, heartbeat and my self control... proceed with caution! 😉🌚🌚
         </p>
 
     </div>
 
     <script>
         const princessPhoto = document.getElementById('princessPhoto');
-        let bubbleInterval; // Variable to store the interval reference
+        let sparkInterval; 
+        
+        // Use single asterisk or similar for subtle sparkle
+        const sparkList = ['✨', '⭐', '🌟', '💖', '💎']; // Royal/magical themed emojis
 
         // Fallback for image loading error
         princessPhoto.onerror = () => {
-            alert("💔 Error loading princess.png. Please check the file path! 💔");
+            alert("💔 Error loading princess.png. Check file path! 💔");
         };
 
-        // --- NEW: Bubble Generation and Timed Stop ---
+        // --- NEW: Royal Sparkle / Fairy Dust Animation ---
 
-        function createBubble() {
-            const bubble = document.createElement('div');
-            bubble.classList.add('bubble');
-            document.body.appendChild(bubble);
-
-            // Set animation properties for a smooth float from bottom to top
-            const size = Math.random() * 25 + 10; // 10px to 35px
-            const duration = Math.random() * 15 + 10; // 10s to 25s
+        function createSpark() {
+            const spark = document.createElement('div');
+            spark.classList.add('royal-spark');
             
+            // Randomly select a sparkle emoji
+            spark.textContent = sparkList[Math.floor(Math.random() * sparkList.length)];
+            
+            document.body.appendChild(spark);
+
+            const duration = Math.random() * 10 + 10; // 10s to 20s
+            const delay = Math.random() * 5; // Staggered start
+
             const startX = Math.random() * 100 + 'vw';
-            const endX = parseFloat(startX) + (Math.random() - 0.5) * 20 + 'vw'; // Sway side to side slightly
+            const endX = parseFloat(startX) + (Math.random() - 0.5) * 30 + 'vw'; // More sway
+            const xSway = (Math.random() - 0.5) * 40 + 'vw'; // Additional sway for mid-animation
 
-            bubble.style.width = size + 'px';
-            bubble.style.height = size + 'px';
-            bubble.style.setProperty('--x-start', startX);
-            bubble.style.setProperty('--x-end', endX);
-            bubble.style.setProperty('--duration', duration + 's');
+            spark.style.setProperty('--x-start', startX);
+            spark.style.setProperty('--x-end', endX);
+            spark.style.setProperty('--x-sway', xSway);
+            spark.style.setProperty('--duration', duration + 's');
+            spark.style.animationDelay = delay + 's';
 
-            // Remove bubble once animation is complete
-            bubble.addEventListener('animationend', () => {
-                bubble.remove();
+            // Remove spark once animation is complete
+            spark.addEventListener('animationend', () => {
+                spark.remove();
             });
         }
         
-        // Start the continuous generation of bubbles
-        bubbleInterval = setInterval(createBubble, 400); // Create a new bubble every 400ms
+        // Start the continuous generation of royal sparks
+        sparkInterval = setInterval(createSpark, 300); // Create a new spark every 300ms
 
-        // Stop the animation after 10 seconds (adjust this time as needed)
-        // This prevents the elements from continuously gathering and cleans up the visual space.
-        const animationDuration = 10000; // 10 seconds in milliseconds
+        // Stop the animation after 15 seconds
+        const animationDuration = 15000; 
 
         setTimeout(() => {
-            clearInterval(bubbleInterval); // Stop creating new bubbles
+            clearInterval(sparkInterval); // Stop creating new sparks
 
-            // Optional: Fade out any remaining bubbles gracefully
-            document.querySelectorAll('.bubble').forEach(b => {
-                b.style.opacity = 0;
-                b.style.transition = 'opacity 3s ease-out';
-                setTimeout(() => b.remove(), 3000);
+            // Fade out any remaining sparks gracefully
+            document.querySelectorAll('.royal-spark').forEach(s => {
+                s.style.opacity = 0;
+                s.style.transition = 'opacity 3s ease-out';
+                setTimeout(() => s.remove(), 3000);
             });
         }, animationDuration);
 
