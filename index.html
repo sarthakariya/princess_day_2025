@@ -73,7 +73,7 @@
         h1 {
             font-family: 'Charmonman', cursive; /* Scripty, elegant font for title */
             color: #6a1b9a; /* Darker royal purple */
-            font-size: 2.8em; /* Larger heading */
+            font-size: clamp(2.2em, 8vw, 3.5em); /* Responsive sizing */
             margin-bottom: 25px;
             text-shadow: 2px 2px 5px rgba(0,0,0,0.15);
             animation: textSlideIn 1s ease-out 1s forwards;
@@ -86,18 +86,24 @@
         }
 
         p {
-            font-size: 1.1em;
+            font-size: clamp(1em, 3.8vw, 1.1em); /* Responsive sizing */
             line-height: 1.7;
             margin-bottom: 18px;
         }
         .romantic-text p {
             font-family: 'Great Vibes', cursive; /* More elegant script font for main message */
-            font-size: 1.5em; /* Larger for the main message */
+            font-size: clamp(1.3em, 5vw, 1.7em); /* Larger for the main message, responsive */
             font-weight: 500;
             color: #4a148c;
-            animation: romanticTextFadeIn 2s ease-out 3s forwards; /* Delayed animation */
-            opacity: 0;
+            opacity: 0; /* Hidden initially for staggered animation */
+            animation: romanticTextFadeIn 2s ease-out forwards; /* Individual fade in for each p */
         }
+
+        /* Staggered animation delays for the romantic text paragraphs */
+        .romantic-text p:nth-child(1) { animation-delay: 2.5s; }
+        .romantic-text p:nth-child(2) { animation-delay: 3.5s; }
+        .romantic-text p:nth-child(3) { animation-delay: 4.5s; }
+
 
         @keyframes romanticTextFadeIn {
             to { opacity: 1; }
@@ -111,27 +117,30 @@
             margin-top: 25px;
         }
 
-        /* Camera Box Styling */
-        .camera-box {
+        /* Image Box Styling */
+        .image-box {
             position: relative;
-            background: #e0f2f7; /* Light bluish tint for the camera area */
+            background: #e0f2f7; /* Light bluish tint for the image area */
             padding: 15px;
             border-radius: 20px;
             box-shadow: inset 0 0 15px rgba(0,0,0,0.1); /* Inner shadow for depth */
             border: 3px solid #6a1b9a; /* Purple border */
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* The Ornate Camera Frame */
-        .camera-frame {
+        /* The Ornate Square Photo Frame */
+        .photo-frame {
             position: relative;
-            width: 100%;
-            padding-top: 100%; /* Maintain 1:1 aspect ratio */
-            max-width: 300px;
-            max-height: 300px;
+            width: 90%; /* Larger percentage width for phone screens */
+            max-width: 400px; /* Increased max-width for overall size */
+            padding-top: 90%; /* Maintain 1:1 aspect ratio for square */
             margin: 0 auto 20px auto;
             border: 8px double #ffd700; /* Gold double border */
-            border-radius: 50%;
+            border-radius: 15px; /* Slightly rounded corners for square */
             box-shadow: 0 0 25px rgba(255,215,0,0.8), inset 0 0 12px rgba(255,215,0,0.6); /* More glowing gold effect */
             background: linear-gradient(45deg, #fff3e0, #ffecb3); /* Inner gold gradient */
             overflow: hidden;
@@ -145,42 +154,21 @@
 
         @keyframes framePopIn {
             0% { transform: scale(0.8); opacity: 0; }
-            70% { transform: scale(1.05); opacity: 1; }
+            70% { transform: scale(1.02); opacity: 1; }
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* Crown above the frame */
-        .camera-frame::before {
-            content: '';
-            position: absolute;
-            top: -30px; /* Position the crown above */
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px; /* Larger crown */
-            height: 75px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23ffd700" d="M2.2 60.1l11-20 22 20h29.6l22-20 11 20L100 60.1H0zM22.5 35.8l15-15L50 0l12.5 20.8 15-15 15 15-15 15 15 15L87.5 70.8 75 50 62.5 70.8 50 50 37.5 70.8 25 50 12.5 70.8l-15-15 15-15z"/></svg>') no-repeat center center;
-            background-size: contain;
-            z-index: 3; /* Ensure crown is above frame */
-            filter: drop-shadow(0 5px 8px rgba(0,0,0,0.4));
-            animation: crownBounce 2s infinite ease-in-out 2s; /* Animated crown */
-        }
-
-        @keyframes crownBounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-10px); }
-        }
-
-        /* Crown over the person's head (animated) */
+        /* Animated Crown OVER THE PRINCESS'S PHOTO */
         .animated-crown {
             position: absolute;
-            top: 5%; /* Adjust vertically */
+            top: 5%; /* Adjust vertically to fit on head */
             left: 50%;
             transform: translateX(-50%);
-            width: 50%; /* Adjust size relative to video */
+            width: 60%; /* Adjust size relative to image */
+            max-width: 180px; /* Max size for crown */
             height: auto;
-            max-width: 150px; /* Max size for crown */
-            z-index: 4; /* Above video */
-            opacity: 0; /* Hidden until video plays */
+            z-index: 4; /* Above image */
+            opacity: 0; /* Hidden initially */
             animation: crownShine 2s ease-out forwards 2.5s, crownFloat 4s infinite ease-in-out 2.5s;
         }
 
@@ -200,29 +188,36 @@
             50% { transform: translateX(-50%) translateY(-8px); }
         }
 
-
-        #videoElement {
+        /* The Princess's Photo */
+        #princessPhoto {
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            transform: translate(-50%, -50%) scaleX(-1); /* Center and flip for selfie */
-            display: none;
+            object-fit: cover; /* Cover the frame */
+            border-radius: 10px; /* Match frame's rounded corners */
             z-index: 1;
+            opacity: 0; /* Hidden initially */
+            animation: photoFadeIn 1s ease-out 2s forwards;
         }
 
+        @keyframes photoFadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Loading message is no longer needed for local image, but keeping CSS if you decide to add it back */
         #loading-message {
+            display: none; /* Hide message for local image */
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 1.1em;
+            font-size: clamp(1em, 3.5vw, 1.1em);
             color: #6a1b9a;
             font-weight: bold;
             text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
+            z-index: 2;
         }
 
         /* Text Box and Animated Text */
@@ -232,7 +227,7 @@
             border-radius: 20px;
             border: 3px solid #ab47bc;
             opacity: 0; /* Hidden initially for animation */
-            animation: fadeIn 1.5s ease-out 2s forwards; /* Delayed to show camera first */
+            animation: fadeIn 1.5s ease-out 2s forwards; /* Delayed to show photo first */
         }
         @keyframes fadeIn {
             to { opacity: 1; }
@@ -240,17 +235,17 @@
 
         .tease {
             margin-top: 35px;
-            font-size: 0.9em;
+            font-size: clamp(0.9em, 3.2vw, 1.0em);
             color: #880e4f; /* Deeper rose for the tease */
             opacity: 0.8;
             font-style: italic;
-            animation: fadeIn 1s ease-out 4s forwards; /* Even more delayed */
+            animation: fadeIn 1s ease-out 5s forwards; /* Even more delayed */
         }
 
-        /* Rose Petal Overlay */
+        /* Rose Petal Overlay (unchanged) */
         .rose-petal {
             position: fixed;
-            background-color: #ffb6c1; /* Light pink */
+            background-color: #ffb6c1;
             width: 20px;
             height: 20px;
             border-radius: 50%;
@@ -272,40 +267,31 @@
             }
         }
 
-
-        /* Responsive Adjustments for larger screens (Tablets and Desktops) */
+        /* Responsive Adjustments */
         @media (min-width: 768px) {
-            h1 {
-                font-size: 3.5em; /* Even larger heading */
-            }
-            p {
-                font-size: 1.2em;
-            }
-            .romantic-text p {
-                font-size: 1.7em;
-            }
             .main-content {
                 flex-direction: row; /* Side-by-side on larger screens */
+                justify-content: center;
+                align-items: flex-start;
             }
-            .camera-box, .text-box {
-                flex: 1; /* Distribute space evenly */
+            .image-box, .text-box {
+                flex: 1;
                 padding: 30px;
             }
-            .camera-frame {
-                max-width: 350px;
-                max-height: 350px;
+            .photo-frame {
+                max-width: 400px;
+                padding-top: 400px;
             }
             .text-box {
-                margin-left: 20px; /* Add some space between camera and text */
+                margin-left: 30px;
             }
         }
         @media (max-width: 480px) { /* Extra small screens */
-            h1 { font-size: 2.2em; }
-            .romantic-text p { font-size: 1.2em; }
-            .camera-frame { max-width: 250px; max-height: 250px; }
-            .camera-frame::before { width: 80px; height: 60px; top: -20px; } /* Smaller crown above frame */
-            .animated-crown { width: 60%; max-width: 100px; top: 8%; } /* Smaller animated crown */
-            .container { padding: 15px; }
+            .photo-frame {
+                width: 95%;
+                padding-top: 95%;
+            }
+            .animated-crown { width: 70%; max-width: 120px; top: 8%; }
         }
     </style>
 </head>
@@ -315,11 +301,11 @@
         <h1>👑 My Treasure Map Ends Here... For My Princess 💖</h1>
         
         <div class="main-content">
-            <div class="camera-box">
-                <p>Look closely into the magical mirror... Do you see the real treasure?</p>
-                <div class="camera-frame">
-                    <video id="videoElement" autoplay playsinline></video>
-                    <p id="loading-message">Summoning the magic...</p>
+            <div class="image-box">
+                <p>Gaze into this magical frame... Do you see the real treasure?</p>
+                <div class="photo-frame">
+                    <img id="princessPhoto" src="princess.png" alt="My Beautiful Princess">
+                    <p id="loading-message"></p>
                     <div class="animated-crown" id="animatedCrown">
                         <img src="https://www.svgrepo.com/show/366367/crown.svg" alt="Animated Crown">
                     </div>
@@ -331,24 +317,18 @@
                     **Look carefully...**
                     <br><br>
                     This radiant face right here?
-                    <br><br>
-                    This is the girl I call **my princess.**
-                    <br>
-                    My ultimate treasure.
-                    <br>
-                    My heart's true person.
-                    <br>
-                    The one my soul chose without a second thought.
                 </p>
                 
                 <p class="romantic-text">
-                    **If you're gazing at this now...**
+                    This is the girl I call **my princess.**
                     <br>
-                    then just know...
-                    <br>
-                    you're the only queen I'd cross a thousand enchanted maps for,
-                    <br>
-                    and beyond.
+                    My ultimate treasure.
+                </p>
+                
+                <p class="romantic-text">
+                    My heart's true person, chosen without a second thought.
+                    <br><br>
+                    **If you're gazing at this now...** then just know... you're the only queen I'd cross a thousand enchanted maps for, and beyond.
                 </p>
             </div>
         </div>
@@ -360,36 +340,35 @@
     </div>
 
     <script>
-        const video = document.getElementById('videoElement');
-        const loadingMessage = document.getElementById('loading-message');
+        const princessPhoto = document.getElementById('princessPhoto');
         const animatedCrown = document.getElementById('animatedCrown');
 
-        // Request camera access with 'playsinline' for iOS Safari
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({
-                video: {
-                    facingMode: "user" // Ensures front/selfie camera!
-                }
-            })
-            .then(function(stream) {
-                video.srcObject = stream;
-                video.style.display = 'block'; // Show the video element
-                loadingMessage.style.display = 'none'; // Hide loading message
-                video.play(); // Ensure video plays
-                animatedCrown.style.display = 'block'; // Show the animated crown
-            })
-            .catch(function(error) {
-                console.error("Camera access failed: ", error);
-                loadingMessage.innerHTML = "💔 Camera magic couldn't activate, but your beauty shines brighter than any lens! This message is still just for you, my love. 💔";
-                loadingMessage.style.display = 'block';
-                animatedCrown.style.display = 'none'; // Hide crown if no camera
-            });
-        } else {
-            loadingMessage.innerHTML = "💔 This device cannot perform camera magic, but the message is still for my beautiful princess! 💔";
-            animatedCrown.style.display = 'none'; // Hide crown if no camera
-        }
+        // Since this is a local image, it should load immediately. 
+        // We ensure the crown and photo are visible immediately after the main container animation.
+        
+        // Function to ensure crown is shown if image loaded correctly
+        princessPhoto.onload = () => {
+             // The animated crown is set to be hidden initially via CSS (opacity: 0) and appears via animation (crownShine).
+             // We ensure it is set to display: block here, but the opacity animation manages the fade-in.
+            animatedCrown.style.display = 'block'; 
+        };
 
-        // Generate falling rose petals
+        // Fallback for image loading error
+        princessPhoto.onerror = () => {
+            alert("💔 Error loading princess.png. Please check the file path! 💔");
+            animatedCrown.style.display = 'none'; // Hide crown if image fails
+        };
+
+        // Initialize display states if image loads from cache or very fast
+        document.addEventListener('DOMContentLoaded', () => {
+            if (princessPhoto.complete && princessPhoto.naturalHeight !== 0) {
+                princessPhoto.onload(); // Manually trigger if already loaded
+            }
+             // No need for a separate loading message element since we expect the local file to load quickly.
+        });
+
+
+        // Generate falling rose petals (unchanged)
         function createPetal() {
             const petal = document.createElement('div');
             petal.classList.add('rose-petal');
@@ -409,7 +388,6 @@
             petal.style.animationDelay = delay + 's';
             petal.style.backgroundColor = `hsl(${Math.random() * 20 + 330}, 80%, 70%)`; /* Varying pinks/reds */
             petal.style.backgroundImage = `radial-gradient(circle at 30% 30%, #fff, ${petal.style.backgroundColor})`; /* Inner glow */
-
 
             petal.addEventListener('animationend', () => {
                 petal.remove();
