@@ -8,9 +8,9 @@
     <style>
         /* General Body and Background */
         body {
-            font-family: 'Playfair Display', serif; /* Default elegant font for general elements */
-            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%); /* Soft gradient background */
-            color: #4a148c; /* Deep royal purple for text */
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+            color: #4a148c;
             text-align: center;
             padding: 15px;
             margin: 0;
@@ -32,11 +32,11 @@
             max-width: 900px;
             width: 95%;
             margin: auto;
-            background: rgba(255, 255, 255, 0.98); /* Less transparent white */
+            background: rgba(255, 255, 255, 0.98);
             padding: 25px;
             border-radius: 25px;
             box-shadow: 0 10px 30px rgba(74, 20, 140, 0.4);
-            border: 4px solid #ab47bc; /* Regal purple border */
+            border: 4px solid #ab47bc;
             position: relative;
             overflow: hidden;
             z-index: 1;
@@ -71,9 +71,10 @@
 
         /* Headings and Paragraphs */
         h1 {
-            font-family: 'Great Vibes', cursive; /* Use Great Vibes for a more pronounced royal script look */
+            font-family: 'Great Vibes', cursive;
             color: #6a1b9a;
-            font-size: clamp(2.8em, 9vw, 4.5em); /* Slightly larger heading for impact */
+            /* FONT ADJUSTMENT: Reduced max size from 4.5em to 3.5em */
+            font-size: clamp(2.5em, 8vw, 3.5em);
             margin-bottom: 25px;
             text-shadow: 2px 2px 5px rgba(0,0,0,0.15);
             animation: textSlideIn 1s ease-out 1s forwards;
@@ -86,14 +87,16 @@
         }
 
         p {
-            font-size: clamp(1em, 3.8vw, 1.1em);
+            /* FONT ADJUSTMENT: Reduced max size from 1.1em to 1.0em */
+            font-size: clamp(0.9em, 3.5vw, 1.0em);
             line-height: 1.7;
             margin-bottom: 18px;
         }
         .romantic-text p {
-            font-family: 'Great Vibes', cursive; /* New, distinct script font for the main message */
-            font-size: clamp(1.5em, 6vw, 2.2em); /* Much larger and more prominent */
-            font-weight: 400; /* Great Vibes looks best at 400 */
+            font-family: 'Great Vibes', cursive;
+            /* FONT ADJUSTMENT: Reduced max size from 2.2em to 1.7em */
+            font-size: clamp(1.3em, 5vw, 1.7em);
+            font-weight: 400;
             color: #4a148c;
             opacity: 0;
             animation: romanticTextFadeIn 2s ease-out forwards;
@@ -108,15 +111,13 @@
             to { opacity: 1; }
         }
 
-        /* Main Content Layout (UNCHANGED) */
+        /* Rest of layout and photo styles (UNCHANGED) */
         .main-content {
             display: flex;
             flex-direction: column;
             gap: 25px;
             margin-top: 25px;
         }
-
-        /* Image Box, Photo Frame, and Photo (UNCHANGED) */
         .image-box {
             position: relative;
             background: #e0f2f7;
@@ -148,13 +149,11 @@
             opacity: 0;
             animation: framePopIn 1s ease-out 1.5s forwards;
         }
-
         @keyframes framePopIn {
             0% { transform: scale(0.8); opacity: 0; }
             70% { transform: scale(1.02); opacity: 1; }
             100% { transform: scale(1); opacity: 1; }
         }
-
         #princessPhoto {
             position: absolute;
             top: 0;
@@ -167,12 +166,9 @@
             opacity: 0;
             animation: photoFadeIn 1s ease-out 2s forwards;
         }
-
         @keyframes photoFadeIn {
             to { opacity: 1; }
         }
-
-        /* Text Box and Animated Text (UNCHANGED) */
         .text-box {
             background: #f3e5f5;
             padding: 20px;
@@ -184,7 +180,6 @@
         @keyframes fadeIn {
             to { opacity: 1; }
         }
-
         .tease {
             margin-top: 35px;
             font-size: clamp(0.9em, 3.2vw, 1.0em);
@@ -194,27 +189,28 @@
             animation: fadeIn 1s ease-out 5s forwards;
         }
 
-        /* NEW: Subtle Emoji Flutter */
-        .emoji-flutter {
+        /* NEW: Subtle Bubble Animation */
+        .bubble {
             position: fixed;
-            font-size: clamp(0.7em, 3vw, 1.2em); /* Small, subtle size */
+            background-color: rgba(255, 255, 255, 0.6); /* Slightly visible white/pink bubble */
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.7) inset;
             opacity: 0;
             pointer-events: none;
             z-index: 9999;
-            text-shadow: 0 0 3px rgba(255, 255, 255, 0.5); /* Soft white glow */
-            animation: flutter 15s linear infinite;
+            animation: bubbleFloat var(--duration) linear infinite;
         }
 
-        @keyframes flutter {
+        @keyframes bubbleFloat {
             0% {
-                transform: translate(var(--x-start), -10vh) rotate(0deg);
+                transform: translate(var(--x-start), 110vh) scale(0);
                 opacity: 0;
             }
-            10% { opacity: 0.4; transform: translate(calc(var(--x-start) + 5vw), 10vh) rotate(10deg); }
-            50% { opacity: 0.6; transform: translate(calc(var(--x-start) - 10vw), 50vh) rotate(-10deg); }
-            90% { opacity: 0.4; transform: translate(calc(var(--x-end) + 5vw), 90vh) rotate(5deg); }
+            10% { opacity: 0.7; transform: translate(var(--x-start), 90vh) scale(1); }
+            90% { opacity: 0.5; transform: translate(var(--x-end), 10vh) scale(1.2); }
             100% {
-                transform: translate(var(--x-end), 110vh) rotate(0deg);
+                transform: translate(var(--x-end), -10vh) scale(0);
                 opacity: 0;
             }
         }
@@ -289,42 +285,56 @@
 
     <script>
         const princessPhoto = document.getElementById('princessPhoto');
-        const emojiList = ['💖', '✨', '🌟']; // Emojis for the subtle flutter
+        let bubbleInterval; // Variable to store the interval reference
 
         // Fallback for image loading error
         princessPhoto.onerror = () => {
             alert("💔 Error loading princess.png. Please check the file path! 💔");
         };
 
-        // --- NEW: Emoji Flutter Generation ---
+        // --- NEW: Bubble Generation and Timed Stop ---
 
-        function createEmoji() {
-            const emoji = document.createElement('div');
-            emoji.classList.add('emoji-flutter');
-            
-            // Randomly select an emoji
-            emoji.textContent = emojiList[Math.floor(Math.random() * emojiList.length)];
-            
-            document.body.appendChild(emoji);
+        function createBubble() {
+            const bubble = document.createElement('div');
+            bubble.classList.add('bubble');
+            document.body.appendChild(bubble);
 
-            // Set animation properties
+            // Set animation properties for a smooth float from bottom to top
+            const size = Math.random() * 25 + 10; // 10px to 35px
+            const duration = Math.random() * 15 + 10; // 10s to 25s
+            
             const startX = Math.random() * 100 + 'vw';
-            const endX = Math.random() * 100 + 'vw';
-            const duration = Math.random() * 10 + 10; // 10-20 seconds
-            const delay = Math.random() * 8; // Start at different times
+            const endX = parseFloat(startX) + (Math.random() - 0.5) * 20 + 'vw'; // Sway side to side slightly
 
-            emoji.style.setProperty('--x-start', startX);
-            emoji.style.setProperty('--x-end', endX);
-            emoji.style.animationDuration = duration + 's';
-            emoji.style.animationDelay = delay + 's';
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.setProperty('--x-start', startX);
+            bubble.style.setProperty('--x-end', endX);
+            bubble.style.setProperty('--duration', duration + 's');
 
-            emoji.addEventListener('animationend', () => {
-                emoji.remove();
+            // Remove bubble once animation is complete
+            bubble.addEventListener('animationend', () => {
+                bubble.remove();
             });
         }
         
-        // Continuous generation of emojis
-        setInterval(createEmoji, 500); // Create a new emoji every 500ms
+        // Start the continuous generation of bubbles
+        bubbleInterval = setInterval(createBubble, 400); // Create a new bubble every 400ms
+
+        // Stop the animation after 10 seconds (adjust this time as needed)
+        // This prevents the elements from continuously gathering and cleans up the visual space.
+        const animationDuration = 10000; // 10 seconds in milliseconds
+
+        setTimeout(() => {
+            clearInterval(bubbleInterval); // Stop creating new bubbles
+
+            // Optional: Fade out any remaining bubbles gracefully
+            document.querySelectorAll('.bubble').forEach(b => {
+                b.style.opacity = 0;
+                b.style.transition = 'opacity 3s ease-out';
+                setTimeout(() => b.remove(), 3000);
+            });
+        }, animationDuration);
 
     </script>
 
