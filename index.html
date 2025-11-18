@@ -85,7 +85,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Headings and Paragraphs (Bolder Text) */
+        /* Headings and Paragraphs (UNCHANGED) */
         h1 {
             font-family: 'Great Vibes', cursive;
             color: var(--color-secondary-gold);
@@ -118,7 +118,6 @@
             animation: romanticTextFadeIn 2s ease-out forwards;
         }
 
-        /* Staggered animation delays (UNCHANGED) */
         .romantic-text p:nth-child(1) { animation-delay: 2.5s; }
         .romantic-text p:nth-child(2) { animation-delay: 3.5s; }
         .romantic-text p:nth-child(3) { animation-delay: 4.5s; }
@@ -135,7 +134,7 @@
             margin-top: 25px;
         }
 
-        /* Image Box, Photo Frame, and Photo (UNCHANGED) */
+        /* Image Box, Photo Frame, and Photo */
         .image-box {
             position: relative;
             background: var(--color-background-dark);
@@ -167,9 +166,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transform: scale(0.8);
+            /* Animation timing adjusted */
             opacity: 0;
             animation: framePopIn 1s ease-out 1.5s forwards, royalFrameGlow 6s infinite alternate;
+            cursor: pointer; /* Enable clicking */
         }
         @keyframes framePopIn {
             0% { transform: scale(0.8); opacity: 0; }
@@ -189,13 +189,121 @@
             object-fit: cover;
             border-radius: 8px;
             z-index: 1;
+            /* CRITICAL FIX: Photo is hidden initially and ready for reveal */
             opacity: 0;
-            animation: photoFadeIn 1s ease-out 2s forwards;
+            transition: opacity 1.2s ease-in-out; /* Smooth fade-in duration */
             filter: saturate(1.1) brightness(1.1);
         }
-        @keyframes photoFadeIn {
+
+        /* NEW: Class to show photo only when doors are opened */
+        .photo-frame.revealed #princessPhoto {
+            opacity: 1;
+        }
+
+
+        /* --- NEW: DOOR STYLING --- */
+        .photo-frame-cover {
+            position: absolute;
+            top: -5px; 
+            left: -5px;
+            width: calc(100% + 10px);
+            height: calc(100% + 10px);
+            background: var(--color-surface-dark); 
+            border-radius: 10px; 
+            overflow: hidden; 
+            z-index: 5; 
+            display: flex;
+            transition: all 1s ease-in-out; 
+            /* Added opacity to ensure doors appear after the frame loads */
+            opacity: 0;
+            animation: doorFadeIn 1s ease-out 2.5s forwards;
+        }
+
+        @keyframes doorFadeIn {
             to { opacity: 1; }
         }
+
+        .door-panel {
+            position: absolute;
+            width: 50%; 
+            height: 100%;
+            background: var(--color-background-dark); 
+            border: 2px solid var(--color-secondary-gold);
+            box-shadow: inset 0 0 15px rgba(255, 215, 0, 0.4); 
+            transition: transform 1.2s ease-in-out, opacity 1.2s ease-in-out; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(0.9em, 3.5vw, 1.2em); /* Shorter font size */
+            color: var(--color-secondary-gold);
+            text-shadow: 0 0 8px var(--color-secondary-gold);
+            cursor: pointer;
+            opacity: 1;
+            font-weight: 700; 
+        }
+
+        .door-panel.left {
+            left: 0;
+            border-right: none;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        .door-panel.right {
+            right: 0;
+            border-left: none;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        
+        /* NEW: Handle Visual */
+        .door-handle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            background: var(--color-secondary-gold);
+            border-radius: 50%; /* Knob shape */
+            box-shadow: 0 0 10px var(--color-secondary-gold), 0 0 5px rgba(0, 0, 0, 0.8) inset;
+            z-index: 10;
+            pointer-events: none; /* Allows click to pass through to the frame */
+            border: 2px solid #fff;
+            animation: handlePulse 3s infinite alternate;
+        }
+        .door-handle::before {
+            content: '🔑'; /* Key emoji as a visual cue */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+        @keyframes handlePulse {
+            0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 10px var(--color-secondary-gold), 0 0 5px rgba(0, 0, 0, 0.8) inset; }
+            100% { transform: translate(-50%, -50%) scale(1.05); box-shadow: 0 0 20px var(--color-secondary-gold), 0 0 8px rgba(0, 0, 0, 0.6) inset; }
+        }
+
+
+        /* Animation for opening the doors */
+        .photo-frame-cover.open .door-panel.left {
+            transform: translateX(-100%); 
+            opacity: 0;
+        }
+        .photo-frame-cover.open .door-panel.right {
+            transform: translateX(100%); 
+            opacity: 0;
+        }
+        .photo-frame-cover.open .door-handle {
+            opacity: 0;
+            transition: opacity 0.5s ease-out 0.5s;
+        }
+        /* --- END DOOR STYLING --- */
+
 
         /* Text Box (UNCHANGED GLOW) */
         .text-box {
@@ -225,8 +333,6 @@
             animation: fadeIn 1s ease-out 5s forwards;
             font-weight: 500;
         }
-
-        /* --- REMOVED: .royal-spark CSS block and @keyframes sparkFall --- */
 
         /* Responsive Adjustments (UNCHANGED) */
         @media (min-width: 768px) {
@@ -263,8 +369,13 @@
         <div class="main-content">
             <div class="image-box">
                 <p>Did you find the treasure? yes I did... Just look below what I have found... 👀🤌🏼✨</p>
-                <div class="photo-frame">
+                <div class="photo-frame" id="photoFrame">
                     <img id="princessPhoto" src="princess.png" alt="My Beautiful Princess">
+                    
+                    <div class="photo-frame-cover" id="photoFrameCover">
+                        <div class="door-panel left"><span>🔑 Tap to Open 💖</span></div>
+                        <div class="door-panel right"></div>
+                        <div class="door-handle"></div> </div>
                 </div>
             </div>
             
@@ -298,14 +409,26 @@
 
     <script>
         const princessPhoto = document.getElementById('princessPhoto');
-        // --- REMOVED: sparkInterval declaration and sparkList ---
+        const photoFrame = document.getElementById('photoFrame');
+        const photoFrameCover = document.getElementById('photoFrameCover');
         
         // Fallback for image loading error
         princessPhoto.onerror = () => {
             alert("💔 Error loading princess.png. Check file path! 💔");
         };
 
-        // --- REMOVED: createSpark function, setInterval, and setTimeout blocks ---
+        // --- NEW: Door Reveal Logic ---
+        photoFrame.addEventListener('click', () => {
+            if (!photoFrameCover.classList.contains('open')) {
+                // 1. Open the doors (triggers the CSS transition to slide them away)
+                photoFrameCover.classList.add('open');
+
+                // 2. Add the 'revealed' class to the photo frame to trigger the photo's fade-in 
+                // This ensures the photo shows up ONLY when the door opens.
+                photoFrame.classList.add('revealed');
+            }
+        });
+        // --- End Door Reveal Logic ---
 
     </script>
 
